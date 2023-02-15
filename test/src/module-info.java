@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author haopengwu
- *
- */
-module test {
-}
