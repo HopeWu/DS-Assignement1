@@ -13,14 +13,15 @@ public class TestDrive {
 		Dataset dataset = new Dataset();
 		
 		// configure the distribution for the data
-		Hashtable<Integer, Float> distribution = new Hashtable();
-		distribution.put(1, (float) 0.5);
+		Hashtable<Integer, Float> distribution = new Hashtable<Integer, Float>();
+		distribution.put(1, (float) 0.3);
+		distribution.put(5, (float) 0.2);
 		distribution.put(10, (float) 0.5);
 		
 		// set the distribution of the data set
 		dataset.setDistribution(distribution);
 		
-		Task[] tasks = dataset.getData(10000);
+		Task[] tasks = dataset.getData(100000);
 		
 		Queue queue1 = new StandardQueueByArr(tasks.length);
 		Queue queue2 = new HalfPrioQueueByArr(tasks.length);
