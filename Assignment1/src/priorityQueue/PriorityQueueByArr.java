@@ -2,7 +2,7 @@ package priorityQueue;
 import queue.Queue;
 import task.Task;
 
-public class PriorityQueue implements Queue{
+public class PriorityQueueByArr implements Queue{
 
 	@Override
 	public void enqueue(Task task) {
