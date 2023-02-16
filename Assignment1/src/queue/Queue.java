@@ -1,4 +1,4 @@
-package priorityQueue;
+package queue;
 import task.Task;
 
 public interface Queue {
