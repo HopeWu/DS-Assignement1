@@ -8,10 +8,10 @@ public class StandardQueueByArr implements Queue {
 	private int size;
 	Task[] queue;
 	
-	StandardQueueByArr(){
-		
-	}
-	
+	/*
+	 * @size
+	 * the size of the queue, has to be set when initializing
+	 */
 	StandardQueueByArr(int size){
 		this.size = size;
 	}
