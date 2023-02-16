@@ -9,5 +9,6 @@ public interface Queue {
 	// empty this queue
 	public void empty();
 	public boolean isEmpty();
+	public boolean isFull();
 	public int size();
 } 
