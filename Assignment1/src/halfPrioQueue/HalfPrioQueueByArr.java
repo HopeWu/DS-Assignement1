@@ -5,6 +5,10 @@ import task.Task;
 
 public class HalfPrioQueueByArr implements Queue{
 
+	public HalfPrioQueueByArr(int length) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void enqueue(Task task) {
 		// TODO Auto-generated method stub
