@@ -39,4 +39,16 @@ public class HalfPrioQueueByArr implements Queue{
 		return 0;
 	}
 
+	@Override
+	public void empty() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isFull() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
