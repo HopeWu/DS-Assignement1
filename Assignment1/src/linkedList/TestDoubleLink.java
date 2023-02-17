@@ -17,6 +17,7 @@ public class TestDoubleLink {
         
         myDoubleList.removeFromHead();
         myDoubleList.removeFromTail();
+        myDoubleList.remove(1);
         System.out.println(myDoubleList.getLength());
         myDoubleList.detailPrint();
         

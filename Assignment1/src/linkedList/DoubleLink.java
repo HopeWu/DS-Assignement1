@@ -71,7 +71,33 @@ public class DoubleLink<T> {
     	length++;
     }
     
-
+ 
+    // delete the node with the specific index
+    public DoubleTaskNode<T> remove(int index){
+    	DoubleTaskNode<T> temp = new DoubleTaskNode<T>(null,null,null);
+    	if(index>this.getLength()|| index<1) {
+        	System.out.println("This index is out of range");
+        	return null;
+        }
+        else if(index==1) {
+        	return removeFromHead();
+        }
+        else{
+        	DoubleTaskNode<T> node = head;
+        	for(int i=1; i<index-1; i++) {
+        		node = node.getNext();
+        	}
+        	temp = node.getNext();
+        	if(temp != tail) {
+        		node.setNext(temp.getNext());
+        		length--;
+        	}
+        	else {
+        		removeFromTail();
+        	}
+        }
+		return head;
+    }
     // delete node from head
     public DoubleTaskNode<T> removeFromHead() {
         if(length==0) {

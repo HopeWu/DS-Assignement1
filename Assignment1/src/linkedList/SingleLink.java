@@ -69,7 +69,34 @@ public class SingleLink<T> {
     	length++;
     }
     
+	// delete the node with the specific index
+    public SingleTaskNode<T> remove(int index){
+    	SingleTaskNode<T> temp = new SingleTaskNode<T>(null,null);
+    	if(index>this.getLength()|| index<1) {
+        	System.out.println("This index is out of range");
+        	return null;
+        }
+        else if(index==1) {
+        	return removeFromHead();
+        }
+        else{
+        	SingleTaskNode<T> node = head;
+        	for(int i=1; i<index-1; i++) {
+        		node = node.getNext();
+        	}
+        	temp = node.getNext();
+        	if(temp != tail) {
+        		node.setNext(temp.getNext());
+        		length--;
+        	}
+        	else {
+        		removeFromTail();
+        	}
+        }
+		return head;
+    }
 
+    
     // delete node from head
     public SingleTaskNode<T> removeFromHead() {
         if(length==0) {
@@ -80,6 +107,7 @@ public class SingleLink<T> {
         SingleTaskNode<T> LastHead = head;
         SingleTaskNode<T> node = head.getNext();
         head = node;
+        length --;
         return LastHead;
     }
 
@@ -118,7 +146,6 @@ public class SingleLink<T> {
             System.out.println();
             node = node.getNext();
         }
-        length --;
         System.out.println();
     }
 
