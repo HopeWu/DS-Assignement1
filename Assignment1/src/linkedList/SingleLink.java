@@ -9,20 +9,29 @@ public class SingleLink<T> {
 	private int length;
 
 	// this is the constructor
-	public SingleLink(T data) {
-		SingleTaskNode<T> head = new SingleTaskNode<T> (data,null);
-		this.head = head;
-		this.tail = head;
-		length=1;
+	public SingleLink() {
+		this.head = null;
+		this.tail = null;
+		length=0;
 	}
 	
 	// get the head of the linked list
 	public SingleTaskNode<T> getHead() {
+		if(head==null) {
+			System.out.println("This linked list is null");
+			System.out.println("");
+			return null;
+		}
 		return head;
 	}
 
 	// get the tail of the linked list
 	public SingleTaskNode<T> getTail() {
+		if(tail==null) {
+			System.out.println("This linked list is null");
+			System.out.println("");
+			return null;
+		}
 		return tail;
 	}
     
@@ -62,7 +71,7 @@ public class SingleLink<T> {
     
 
     // delete node from head
-    public SingleTaskNode<T> deleteFromHead() {
+    public SingleTaskNode<T> removeFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
@@ -75,7 +84,7 @@ public class SingleLink<T> {
     }
 
     // delete node from tail
-    public SingleTaskNode<T> deleteFromTail() {
+    public SingleTaskNode<T> removeFromTail() {
     	if(head==null){
             System.out.println("This linked list is null");
             return null;

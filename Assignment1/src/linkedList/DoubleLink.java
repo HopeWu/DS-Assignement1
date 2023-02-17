@@ -9,20 +9,29 @@ public class DoubleLink<T> {
 	private int length;
 
 	// this is the constructor
-	public DoubleLink(T data) {
-		DoubleTaskNode<T> head = new DoubleTaskNode<T> (data,null,null);
-		this.head = head;
-		this.tail = head;
-		length=1;
+	public DoubleLink() {
+		this.head = null;
+		this.tail = null;
+		length=0;
 	}
 	
 	// get the head of the linked list
 	public DoubleTaskNode<T> getHead() {
+		if(tail==null) {
+			System.out.println("This linked list is null");
+			System.out.println("");
+			return null;
+		}
 		return head;
 	}
 
 	// get the tail of the linked list
 	public DoubleTaskNode<T> getTail() {
+		if(tail==null) {
+			System.out.println("This linked list is null");
+			System.out.println("");
+			return null;
+		}
 		return tail;
 	}
     
@@ -64,7 +73,7 @@ public class DoubleLink<T> {
     
 
     // delete node from head
-    public DoubleTaskNode<T> deleteFromHead() {
+    public DoubleTaskNode<T> removeFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
@@ -78,7 +87,7 @@ public class DoubleLink<T> {
     }
 
     // delete node from tail
-    public DoubleTaskNode<T> deleteFromTail() {
+    public DoubleTaskNode<T> removeFromTail() {
     	if(length==0){
     		System.out.println("This linked list is null");
         	return null;
@@ -100,11 +109,11 @@ public class DoubleLink<T> {
         DoubleTaskNode<T> node = head;
         while (node != null) {
             System.out.print("former point：");
-            System.out.printf("%-5s",node.getBefore() == null ? "null\t" : node.getBefore().getData()+"\t");
+            System.out.printf("%-5s",node.getBefore() == null ? "null\t" : node.getBefore().getData()+"   \t");
             System.out.print("current point：");
             System.out.printf("%-6s",node.getData() + "\t");
             System.out.print("next point：");
-            System.out.printf("%-5s",node.getNext() == null ? "null\t" : node.getNext().getData()+"\t");
+            System.out.printf("%-5s",node.getNext() == null ? "null \t" : node.getNext().getData()+"\t");
             System.out.println();
             node = node.getNext();
         }

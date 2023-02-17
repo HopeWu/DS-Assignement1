@@ -2,7 +2,12 @@ package linkedList;
 
 public class TestDoubleLink {
 	public static void main(String[] args) {
-		DoubleLink<Integer> myDoubleList = new DoubleLink<Integer>(5);
+		DoubleLink<Integer> myDoubleList = new DoubleLink<Integer>();
+		
+		myDoubleList.getHead();
+	        
+		myDoubleList.getTail();
+	        
 		myDoubleList.insertFromHead(10);
 		myDoubleList.insertFromTail(99);
 		myDoubleList.insertFromTail(1);
@@ -10,8 +15,8 @@ public class TestDoubleLink {
 		System.out.println(myDoubleList.getLength());
         myDoubleList.detailPrint();
         
-        myDoubleList.deleteFromHead();
-        myDoubleList.deleteFromTail();
+        myDoubleList.removeFromHead();
+        myDoubleList.removeFromTail();
         System.out.println(myDoubleList.getLength());
         myDoubleList.detailPrint();
         
