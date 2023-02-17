@@ -1,34 +1,34 @@
 package linkedList;
 
-public class SingleTaskNode{
+public class SingleTaskNode<T>{
 
-	private int importance;
+	private T data;
 
-	private SingleTaskNode next;
+	private SingleTaskNode<T> next;
 
 	// get the importance of this node
-	public int getImportance() {
-		return importance;
+	public T getData() {
+		return data;
 	}
 
 	// set the importance of this node
-	public void setImportance(int importance) {
-		this.importance = importance;
+	public void setData(T data) {
+		this.data = data;
 	}
 	
 	// constructor
-	public SingleTaskNode(int importance, SingleTaskNode next) {
-	    this.setImportance(importance);
+	public SingleTaskNode(T data, SingleTaskNode<T> next) {
+	    this.setData(data);
 	    this.next = next;
 	}
 
 	// get the next node of this node
-	public SingleTaskNode getNext() {
+	public SingleTaskNode<T> getNext() {
 	    return next;
 	}
 
 	// set the next node of this node
-	public void setNext(SingleTaskNode next) {
+	public void setNext(SingleTaskNode<T> next) {
 	    this.next = next;
 	}
 

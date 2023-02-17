@@ -1,27 +1,28 @@
 package linkedList;
 
-public class DoubleLink {
+public class DoubleLink<T> {
 	/**
 	 * This is the structure of the doubly linked list
 	 */
-	private DoubleTaskNode head;
-	private DoubleTaskNode tail;
+	private DoubleTaskNode<T> head;
+	private DoubleTaskNode<T> tail;
 	private int length;
 
 	// this is the constructor
-	public DoubleLink(DoubleTaskNode head) {
+	public DoubleLink(T data) {
+		DoubleTaskNode<T> head = new DoubleTaskNode<T> (data,null,null);
 		this.head = head;
 		this.tail = head;
 		length=1;
 	}
 	
 	// get the head of the linked list
-	public DoubleTaskNode getHead() {
+	public DoubleTaskNode<T> getHead() {
 		return head;
 	}
 
 	// get the tail of the linked list
-	public DoubleTaskNode getTail() {
+	public DoubleTaskNode<T> getTail() {
 		return tail;
 	}
     
@@ -33,8 +34,8 @@ public class DoubleLink {
 
 	
 	// insert node from head
-    public void insertFromHead(int importance) {
-    	DoubleTaskNode node = new DoubleTaskNode(importance, head, null);
+    public void insertFromHead(T data) {
+    	DoubleTaskNode<T> node = new DoubleTaskNode<T>(data, head, null);
     	if(length==0) {
         	head = node;
         	tail = node;
@@ -49,11 +50,11 @@ public class DoubleLink {
     
  
     // insert node from tail
-    public void insertFromTail(int data) {
+    public void insertFromTail(T data) {
     	if (head == null) {
     		insertFromHead(data);
         } else {
-        	DoubleTaskNode node = new DoubleTaskNode(data, null, tail.getBefore());
+        	DoubleTaskNode<T> node = new DoubleTaskNode<T>(data, null, tail.getBefore());
             tail.setNext(node);
             node.setBefore(tail);
             tail = node;
@@ -63,13 +64,13 @@ public class DoubleLink {
     
 
     // delete node from head
-    public DoubleTaskNode deleteFromHead() {
+    public DoubleTaskNode<T> deleteFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
         }
-        DoubleTaskNode LastHead = head;
-        DoubleTaskNode node = head.getNext();
+        DoubleTaskNode<T> LastHead = head;
+        DoubleTaskNode<T> node = head.getNext();
         node.setBefore(null);
         head = node;
         length --;
@@ -77,13 +78,13 @@ public class DoubleLink {
     }
 
     // delete node from tail
-    public DoubleTaskNode deleteFromTail() {
+    public DoubleTaskNode<T> deleteFromTail() {
     	if(length==0){
     		System.out.println("This linked list is null");
         	return null;
         }
-    	DoubleTaskNode LastTail = tail;
-        DoubleTaskNode node = tail.getBefore();
+    	DoubleTaskNode<T> LastTail = tail;
+        DoubleTaskNode<T> node = tail.getBefore();
         node.setNext(null);
         tail = node;
         length --;
@@ -96,14 +97,14 @@ public class DoubleLink {
         	System.out.println("This linked list is null");
         }
         
-        DoubleTaskNode node = head;
+        DoubleTaskNode<T> node = head;
         while (node != null) {
-            System.out.print("former point importance：");
-            System.out.printf("%-5s",node.getBefore() == null ? "null\t" : node.getBefore().getImportance()+"\t");
-            System.out.print("current point importance：");
-            System.out.printf("%-6s",node.getImportance() + "\t");
-            System.out.print("next point importance：");
-            System.out.printf("%-5s",node.getNext() == null ? "null\t" : node.getNext().getImportance()+"\t");
+            System.out.print("former point：");
+            System.out.printf("%-5s",node.getBefore() == null ? "null\t" : node.getBefore().getData()+"\t");
+            System.out.print("current point：");
+            System.out.printf("%-6s",node.getData() + "\t");
+            System.out.print("next point：");
+            System.out.printf("%-5s",node.getNext() == null ? "null\t" : node.getNext().getData()+"\t");
             System.out.println();
             node = node.getNext();
         }

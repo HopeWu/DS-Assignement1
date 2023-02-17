@@ -2,8 +2,7 @@ package linkedList;
 
 public class TestDoubleLink {
 	public static void main(String[] args) {
-		DoubleTaskNode head = new DoubleTaskNode(12, null, null);
-		DoubleLink myDoubleList = new DoubleLink(head);
+		DoubleLink<Integer> myDoubleList = new DoubleLink<Integer>(5);
 		myDoubleList.insertFromHead(10);
 		myDoubleList.insertFromTail(99);
 		myDoubleList.insertFromTail(1);

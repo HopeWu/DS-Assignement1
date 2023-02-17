@@ -2,8 +2,7 @@ package linkedList;
 
 public class TestSIngleLink {
 	public static void main(String[] args) {
-        SingleTaskNode head = new SingleTaskNode(12, null);
-        SingleLink mySingleLinkedList = new SingleLink(head);
+        SingleLink<Integer> mySingleLinkedList = new SingleLink<Integer>(12);
         mySingleLinkedList.insertFromHead(10);
         mySingleLinkedList.insertFromTail(99);
         mySingleLinkedList.insertFromTail(1);

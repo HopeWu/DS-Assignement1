@@ -1,27 +1,28 @@
 package linkedList;
 
-public class SingleLink {
+public class SingleLink<T> {
 	/**
 	 * This is the structure of the doubly linked list
 	 */
-	private SingleTaskNode head;
-	private SingleTaskNode tail;
+	private SingleTaskNode<T> head;
+	private SingleTaskNode<T> tail;
 	private int length;
 
 	// this is the constructor
-	public SingleLink(SingleTaskNode head) {
+	public SingleLink(T data) {
+		SingleTaskNode<T> head = new SingleTaskNode<T> (data,null);
 		this.head = head;
 		this.tail = head;
 		length=1;
 	}
 	
 	// get the head of the linked list
-	public SingleTaskNode getHead() {
+	public SingleTaskNode<T> getHead() {
 		return head;
 	}
 
 	// get the tail of the linked list
-	public SingleTaskNode getTail() {
+	public SingleTaskNode<T> getTail() {
 		return tail;
 	}
     
@@ -33,8 +34,8 @@ public class SingleLink {
 
 	
 	// insert node from head
-    public void insertFromHead(int importance) {
-        SingleTaskNode node = new SingleTaskNode(importance, head);
+    public void insertFromHead(T data) {
+        SingleTaskNode<T> node = new SingleTaskNode<T>(data, head);
         if(length==0) {
         	head = node;
         	tail = node;
@@ -48,11 +49,11 @@ public class SingleLink {
     
  
     // insert node from tail
-    public void insertFromTail(int data) {
+    public void insertFromTail(T data) {
     	if (head == null) {
     		insertFromHead(data);
         } else {
-            SingleTaskNode node = new SingleTaskNode(data, null);
+            SingleTaskNode<T> node = new SingleTaskNode<T>(data, null);
             tail.setNext(node);
             tail = node;
         }
@@ -61,26 +62,26 @@ public class SingleLink {
     
 
     // delete node from head
-    public SingleTaskNode deleteFromHead() {
+    public SingleTaskNode<T> deleteFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
         }
         
-        SingleTaskNode LastHead = head;
-        SingleTaskNode node = head.getNext();
+        SingleTaskNode<T> LastHead = head;
+        SingleTaskNode<T> node = head.getNext();
         head = node;
         return LastHead;
     }
 
     // delete node from tail
-    public SingleTaskNode deleteFromTail() {
+    public SingleTaskNode<T> deleteFromTail() {
     	if(head==null){
             System.out.println("This linked list is null");
             return null;
         }
-    	SingleTaskNode LastTail = tail;
-    	SingleTaskNode node =head;
+    	SingleTaskNode<T> LastTail = tail;
+    	SingleTaskNode<T> node =head;
     	int i =1;
     	while(i!=(length-1)) {
     		node=node.getNext();
@@ -99,12 +100,12 @@ public class SingleLink {
         	System.out.println("This linked list is null");
         }
         
-        SingleTaskNode node = head;
+        SingleTaskNode<T> node = head;
         while (node != null) {
-            System.out.print("current point importance：");
-            System.out.printf("%-5s",node.getImportance() + "\t");
-            System.out.print("next point importance：：");
-            System.out.printf("%-6s",node.getNext() == null ? "null\t" : node.getNext().getImportance()+"\t");
+            System.out.print("current point：");
+            System.out.printf("%-5s",node.getData() + "\t");
+            System.out.print("next point：");
+            System.out.printf("%-6s",node.getNext() == null ? "null\t" : node.getNext().getData()+"\t");
             System.out.println();
             node = node.getNext();
         }
