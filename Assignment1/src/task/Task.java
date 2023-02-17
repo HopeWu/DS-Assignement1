@@ -1,8 +1,14 @@
 package task;
 
 public class Task {
+	public Task(int importance) {
+		this.importance = importance;
+	}
+
 	// the more importance, the more priority
 	private int importance;
+	
+	
 	
 	public void perform() {
 		// do a heavy task that needs 10 milliseconds
