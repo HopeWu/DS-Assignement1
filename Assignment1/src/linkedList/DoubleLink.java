@@ -15,6 +15,24 @@ public class DoubleLink<T> {
 		length=0;
 	}
 	
+	// get the node with the specific index
+	public DoubleTaskNode<T> getNode(int index){
+		if(index>this.getLength()|| index<1) {
+			System.out.println("This index is out of range");
+		    return null;
+		}
+		else if(index==1) {
+		    return head;
+		}
+		else{
+			DoubleTaskNode<T> node = head;
+		    for(int i=1; i<index; i++) {
+		    	node = node.getNext();
+		    }
+		    return node;
+		}
+	}	
+	
 	// get the head of the linked list
 	public DoubleTaskNode<T> getHead() {
 		if(tail==null) {
@@ -67,14 +85,17 @@ public class DoubleLink<T> {
             tail.setNext(node);
             node.setBefore(tail);
             tail = node;
+            length++;
         }
-    	length++;
     }
     
  
     // delete the node with the specific index
     public DoubleTaskNode<T> remove(int index){
-    	DoubleTaskNode<T> temp = new DoubleTaskNode<T>(null,null,null);
+    	if (getLength() == 0){
+    		System.out.println("This linked list is null");
+         	return null;
+         }
     	if(index>this.getLength()|| index<1) {
         	System.out.println("This index is out of range");
         	return null;
@@ -87,9 +108,14 @@ public class DoubleLink<T> {
         	for(int i=1; i<index-1; i++) {
         		node = node.getNext();
         	}
+        	DoubleTaskNode<T> DoubleTaskNode = node.getNext();
+        	DoubleTaskNode<T> temp = node.getNext();
         	temp = node.getNext();
         	if(temp != tail) {
         		node.setNext(temp.getNext());
+        		temp.getNext().setBefore(node);
+        		temp.setNext(null);
+        		temp.setBefore(null);
         		length--;
         	}
         	else {
@@ -146,5 +172,11 @@ public class DoubleLink<T> {
         System.out.println();
     }
 
+    // Clear the linked list
+    public void clear(){
+        head.setNext(null);
+        tail = head;
+        length=0;
+    }
 
 }

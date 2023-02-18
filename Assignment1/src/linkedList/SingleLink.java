@@ -15,6 +15,26 @@ public class SingleLink<T> {
 		length=0;
 	}
 	
+	
+	// get the node with the specific node
+	public SingleTaskNode<T> getNode(int index){
+	    if(index>this.getLength()|| index<1) {
+	        System.out.println("This index is out of range");
+	        return null;
+	    }
+	    else if(index==1) {
+	        return head;
+	    }
+	    else{
+	        SingleTaskNode<T> node = head;
+	        for(int i=1; i<index; i++) {
+	        	node = node.getNext();
+	        }
+	        return node;
+	    }
+	}
+
+	
 	// get the head of the linked list
 	public SingleTaskNode<T> getHead() {
 		if(head==null) {
@@ -65,13 +85,17 @@ public class SingleLink<T> {
             SingleTaskNode<T> node = new SingleTaskNode<T>(data, null);
             tail.setNext(node);
             tail = node;
+            length++;
         }
-    	length++;
+    	
     }
     
 	// delete the node with the specific index
     public SingleTaskNode<T> remove(int index){
-    	SingleTaskNode<T> temp = new SingleTaskNode<T>(null,null);
+    	 if (getLength() == 0){
+    		System.out.println("This linked list is null");
+         	return null;
+         }
     	if(index>this.getLength()|| index<1) {
         	System.out.println("This index is out of range");
         	return null;
@@ -84,16 +108,19 @@ public class SingleLink<T> {
         	for(int i=1; i<index-1; i++) {
         		node = node.getNext();
         	}
+        	SingleTaskNode<T> removedNode = node.getNext();
+        	SingleTaskNode<T> temp = node.getNext();
         	temp = node.getNext();
         	if(temp != tail) {
         		node.setNext(temp.getNext());
+        		temp.setNext(null);
         		length--;
+        		return removedNode;
         	}
         	else {
-        		removeFromTail();
+        		return removeFromTail();
         	}
         }
-		return head;
     }
 
     
@@ -149,5 +176,10 @@ public class SingleLink<T> {
         System.out.println();
     }
 
-	
+    // Clear the linked list
+    public void clear(){
+        head.setNext(null);
+        tail = head;
+        length=0;
+    }
 }
