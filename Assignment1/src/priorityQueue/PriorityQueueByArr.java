@@ -1,4 +1,5 @@
 package priorityQueue;
+
 import queue.Queue;
 import task.Task;
 
@@ -15,13 +16,13 @@ public class PriorityQueueByArr implements Queue {
 	 * @param capacity
 	 */
     public PriorityQueueByArr(int capacity) {
-        this.size = 0;
         this.queue = new Task[capacity];
+        this.size = 0;
     }
 
 	/**
 	 * Adds an element to the rear of the queue.
-	 * @param task the element that is to be added to the queue
+	 * @param task The element that is to be added to the queue
 	 */
     @Override
     public void enqueue(Task task) {
