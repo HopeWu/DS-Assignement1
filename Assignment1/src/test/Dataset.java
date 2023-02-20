@@ -11,6 +11,9 @@ public class Dataset {
 		this.rand = new Random();
 	}
 
+	/*
+	 * examples to use this class
+	 */
 	public static void main(String[] args) {
 		// configure the distribution for the data
 		Dataset dataset = new Dataset();
