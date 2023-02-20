@@ -49,7 +49,7 @@ public class Dataset {
 		 */
 		
 		if (this.distribution == null) {
-			System.out.println("Error! Please probabilities before.");
+			System.out.println("Error! Please set probabilities before.");
 			return null;
 		}
 
@@ -60,7 +60,7 @@ public class Dataset {
 
 		Task[] tasks = new Task[size];
 		for (i = 0; i < tasks.length; ++i) {
-			importance = generate.get(randInt());
+			importance = this.generate.get(this.randInt());
 			tasks[i] = new Task(importance);
 		}
 		return tasks;
