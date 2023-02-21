@@ -12,12 +12,12 @@ public class Task {
 	
 	public void perform() {
 		// do a heavy task that needs 10 milliseconds
-		try {
-			wait(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(1);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public int getImportance() {
