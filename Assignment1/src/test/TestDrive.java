@@ -8,7 +8,7 @@ import queue.Queue;
 import standardQueue.StandardQueueByArr;
 import task.Task;
 
-public class TestDriveByPrateek {
+public class TestDrive {
 	static public void main(String[] string) {
 		// for generating testing data
 		Dataset dataset = new Dataset();
@@ -20,7 +20,7 @@ public class TestDriveByPrateek {
 		
 		// set the distribution of the data set
 		
-		Task[] tasks = dataset.getData(100000);
+		Task[] tasks = dataset.getData(1000000);
 		
 		/*
 		 * Create queues for cpus to work on. Don't work on it directly.
@@ -50,7 +50,7 @@ public class TestDriveByPrateek {
 		cpu1.perform(tasks);
 		end = System.currentTimeMillis();
 		elapsedTime.add(end-start);
-		System.out.println("Elapsed Time in milli seconds: "+ (end-start));
+		System.out.println("StandardQueueByArr: Elapsed Time in milli seconds: "+ (end-start));
 		
 		// empty the cpu before assign any tasks in it
 		cpu2.emptyTasks();
@@ -58,7 +58,7 @@ public class TestDriveByPrateek {
 		cpu2.perform(tasks);
 		end = System.currentTimeMillis();
 		elapsedTime.add(end-start);
-		System.out.println("Elapsed Time in milli seconds: "+ (end-start));
+		System.out.println("HalfPrioQueueByArr: Elapsed Time in milli seconds: "+ (end-start));
 		
 		/* 
 		 * Test enqueue time and dequeue time separately. 
