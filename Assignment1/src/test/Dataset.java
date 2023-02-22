@@ -41,6 +41,9 @@ public class Dataset {
 			return null;
 		}
 
+		/**
+		 * So that the smallest probability can be seen.
+		 */
 		this.setDictionaries();
 		
 		int i = 0;
@@ -61,15 +64,11 @@ public class Dataset {
 		// scale the probabilities to make them sum to 1
 		Double sum = 0.0;
 		sum = this.distribution.values().stream().reduce((x, y) -> x + y).get();
-		System.out.println(sum);
 		for (Integer key : this.distribution.keySet()) {
 			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
-		
-		System.out.print("rescaledDist:"); System.out.print(rescaledDist);
-		
+				
 		setRandUpperBound();
-		System.out.printf("upperbound: %d\n",upperbound);
 
 		// prepare the generate dictionary
 		int start = 1;
@@ -80,7 +79,6 @@ public class Dataset {
 				this.generatingDict.put(i, key);
 			}
 		}
-		System.out.println(generatingDict);
 	}
 	
 	/**
