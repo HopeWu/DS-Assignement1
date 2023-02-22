@@ -9,7 +9,7 @@ public class Dataset {
 	public Dataset() {
 		super();
 		this.rand = new Random();
-		this.upperbound = 10000;
+		this.upperbound = 10;
 	}
 
 	// to save the input distribution of data
@@ -65,18 +65,36 @@ public class Dataset {
 		for (Integer key : this.distribution.keySet()) {
 			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
+		
+		System.out.print("rescaledDist:"); System.out.print(rescaledDist);
+		
+		setRandUpperBound();
+		System.out.printf("upperbound: %d\n",upperbound);
 
 		// prepare the generate dictionary
-		int start = 0;
+		int start = 1;
 		for (Integer key : this.rescaledDist.keySet()) {
-			int steps = (int) ((this.rescaledDist.get(key) * upperbound));
+			int steps = (int) Math.round((this.rescaledDist.get(key) * upperbound));
 			int _start = start;
 			for (int i = _start; i < _start + steps; ++i, ++start) {
 				this.generatingDict.put(i, key);
 			}
 		}
+		System.out.println(generatingDict);
 	}
 	
+	/**
+	 * So that the smallest probability can be seen.
+	 */
+	private void setRandUpperBound() {
+		double smallest = Double.POSITIVE_INFINITY;;
+		for (Integer key : this.rescaledDist.keySet()) {
+			if(this.rescaledDist.get(key) < smallest)
+				smallest = this.rescaledDist.get(key);
+		}
+		this.upperbound = (int) Math.ceil(1.0/smallest);
+	}
+
 	/*
 	 * randomly return ints from 0 to 9
 	 */
@@ -85,7 +103,7 @@ public class Dataset {
 		// Setting the upper bound to generate the
 		// random numbers in specific range
 		
-		return rand.nextInt(upperbound);
+		return rand.nextInt(upperbound)+1;
 	}
 	
 	/*
