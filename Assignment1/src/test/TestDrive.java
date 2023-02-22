@@ -43,7 +43,7 @@ public class TestDrive {
 		// Configure the dataset with the same probabilities of importance-1 tasks and
 		// importance-10 tasks
 		dataset.setProbability(1, 0.1);
-		dataset.setProbability(10, 0.9);
+		dataset.setProbability(100, 0.9);
 
 		// Generate the tasks
 		final int DATASIZE = 10000;
