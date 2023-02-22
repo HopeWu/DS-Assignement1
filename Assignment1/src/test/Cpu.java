@@ -5,43 +5,41 @@ import task.Task;
 
 public class Cpu {
 	private Queue queue;
-	
+
 	// Must specify a queue to create a cpu.
-	Cpu(Queue queue){
+	Cpu(Queue queue) {
 		this.queue = queue;
 	}
-	
+
 	/**
 	 * Assign or load this cpu with a bunch of tasks.
+	 * 
 	 * @tasks
 	 */
 	public void assign(Task[] tasks) {
-		
-		if (this.queue.isFull()) throw new RuntimeException("This cpu is already full.");
-		
-		for( int i = 0; i < tasks.length; ++i) {
+
+		if (this.queue.isFull())
+			throw new RuntimeException("This cpu is already full.");
+
+		for (int i = 0; i < tasks.length; ++i) {
 			this.queue.enqueue(tasks[i]);
 		}
 	}
-	
+
 	/**
 	 * Assign or load this cpu with one single task.
+	 * 
 	 * @task
 	 * @author haopengwu
 	 */
 	public void assign(Task task) {
 
-		if (this.queue.isFull()) throw new RuntimeException("This cpu is already full.");
-		
+		if (this.queue.isFull())
+			throw new RuntimeException("This cpu is already full.");
+
 		this.queue.enqueue(task);
 	}
-	/**
-	 * Execute the first task from the load of this cpu.
-	 */
-	public void performOnce() {
 
-		this.executeOnce();
-	}
 	/**
 	 * Execute all the tasks currently loaded with this cpu.
 	 */
@@ -49,6 +47,7 @@ public class Cpu {
 
 		this.execute();
 	}
+
 	/**
 	 * Perform a bunch of tasks, before which clear the cpu.
 	 * 
@@ -56,20 +55,39 @@ public class Cpu {
 	 *
 	 */
 	public void perform(Task[] tasks) {
-		
+
 		this.emptyTasks();
 		this.assign(tasks);
 		this.execute();
 	}
 	
 	/**
+	 * Execute the first task from the load of this cpu.
+	 */
+	public void performOnce() {
+
+		this.executeOnce();
+	}
+
+	/**
+	 * Execute the first @times tasks from the load of this cpu.
+	 */
+	public void performTimesOf(int times) {
+
+		int i = 0;
+		for (i = 0; i < times; ++i)
+			this.executeOnce();
+	}
+
+	/**
 	 * Assign a single task and execute all the tasks in the queue.
 	 * 
 	 * @task, an array of tasks to be executed
+	 * 
 	 * @deprecated useless and confusing method, to be deleted
 	 */
 	private void perform(Task task) {
-		
+
 		this.assign(task);
 		this.execute();
 	}
@@ -79,18 +97,18 @@ public class Cpu {
 		 * Execute all the tasks inside the queue and this queue becomes empty.
 		 */
 		Task task;
-		while(!queue.isEmpty()) {
+		while (!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
 		}
 	}
-	
+
 	public void executeOnce() {
 		/*
 		 * Execute all the tasks inside the queue and this queue becomes empty.
 		 */
 		Task task;
-		if(!queue.isEmpty()) {
+		if (!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
 		}
@@ -102,6 +120,5 @@ public class Cpu {
 		 */
 		this.queue.empty();
 	}
-	
-	
+
 }
