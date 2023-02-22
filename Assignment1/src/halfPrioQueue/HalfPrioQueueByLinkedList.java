@@ -18,7 +18,7 @@ import task.Task;
 public class HalfPrioQueueByLinkedList implements Queue {
 
 	private SingleLink<Task> queue = new SingleLink<>();
-	private final int THRESHOLD = 5;
+	private final int THRESHOLD = 10;
 	
 	/**
 	 * Adds an element to the rear of the queue.

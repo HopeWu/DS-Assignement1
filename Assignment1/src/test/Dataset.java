@@ -79,6 +79,7 @@ public class Dataset {
 				this.generatingDict.put(i, key);
 			}
 		}
+		//System.out.println(generatingDict);
 	}
 	
 	/**
@@ -102,6 +103,27 @@ public class Dataset {
 		// random numbers in specific range
 		
 		return rand.nextInt(upperbound)+1;
+	}
+	
+	/**
+	 * Check the importance distribution of a bunch of tasks. 
+	 * Return a hashtable, which shows the counts of each importance within a given 
+	 * bunch of tasks.
+	 * @param tasks
+	 * @return
+	 */
+	public static Hashtable<Integer, Integer> checkDistruibutionOf(Task[] tasks){
+		Hashtable<Integer, Integer> hashtable = new Hashtable<>();
+		int i;
+		for(i = 0; i < tasks.length; ++i) {
+			Integer importance = tasks[i].getImportance();
+			Integer count = hashtable.get(importance);
+			if (count == null) 
+				hashtable.put(importance, 1);
+			else 
+				hashtable.put(importance, ++count);
+		}
+		return hashtable;
 	}
 	
 	/*
