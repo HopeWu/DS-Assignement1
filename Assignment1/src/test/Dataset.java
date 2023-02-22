@@ -61,7 +61,6 @@ public class Dataset {
 		// scale the probabilities to make them sum to 1
 		Double sum = 0.0;
 		sum = this.distribution.values().stream().reduce((x, y) -> x + y).get();
-		System.out.println(sum);
 		for (Integer key : this.distribution.keySet()) {
 			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
