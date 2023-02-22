@@ -14,13 +14,7 @@ public class Task {
 	 * @return importance of each task performed, which can be utilized later
 	 */
 	public int perform() {
-		// do a heavy task that needs 10 milliseconds
-//		try {
-//			Thread.sleep(1);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		return getImportance();
 	}
 

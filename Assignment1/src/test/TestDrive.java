@@ -4,95 +4,99 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import halfPrioQueue.HalfPrioQueueByArr;
+import halfPrioQueue.HalfPrioQueueByLinkedList;
+import priorityQueue.PriorityQueueBySinglyLinkedList;
 import queue.Queue;
 import standardQueue.StandardQueueByArr;
+import standardQueue.StandardQueueByLinkedList;
 import task.Task;
 
 public class TestDrive {
 	static public void main(String[] string) {
-		// for generating testing data
+
+		stdVsPriEffLink();
+	}
+
+	/**
+	 * StandardQueueByLinkedList vs PriorityQueueBySinglyLinedList, efficiency wise.
+	 * Compare the average workload performed, given the same amount of time, given
+	 * the same tasks already in the queue, importance considered.
+	 * 
+	 * @author haopengwu
+	 */
+	private static int[] stdVsPriEffLink() {
+		/*
+		 * construct the two cpus.
+		 */
+
+		// Create the two queues used in cpus first.
+		Queue standardQueueByLinkedList = new StandardQueueByLinkedList();
+		Queue priorityQueueBySinglyLinedList = new HalfPrioQueueByLinkedList();
+
+		// Compose the queues with correspondent cpu
+		Cpu stdCpu = new Cpu(standardQueueByLinkedList);
+		Cpu priCpu = new Cpu(priorityQueueBySinglyLinedList);
+
+		// Create test data
 		Dataset dataset = new Dataset();
-		
-		// configure the distribution for the data
+
+		// Configure the dataset with the same probabilities of importance-1 tasks and
+		// importance-10 tasks
 		dataset.setProbability(1, 0.1);
-		dataset.setProbability(10, 0.7);
-		dataset.setProbability(5, 0.2);
-		
-		// set the distribution of the data set
-		
-		Task[] tasks = dataset.getData(1000000);
-		
+		dataset.setProbability(10, 0.9);
+
+		// Generate the tasks
+		final int DATASIZE = 10000;
+		Task[] tasks = dataset.getData(DATASIZE);
+
+		// Load the same work to both cpus
+		stdCpu.assign(tasks);
+		priCpu.assign(tasks);
+
 		/*
-		 * Create queues for cpus to work on. Don't work on it directly.
-		 */
-		Queue queue1 = new StandardQueueByArr(tasks.length);
-		Queue queue2 = new HalfPrioQueueByArr(tasks.length);
-		
-		/*
-		 * Compose cpus with different queues
-		 */
-		Cpu cpu1 = new Cpu(queue1);
-		Cpu cpu2 = new Cpu(queue2);
-		
-		/*
-		 * Test the overall time, including the enqueues and the dequeues.
-		 * Simplify the workload as the number of tasks, i.e. treat each task as equal importance.
+		 * Take the first @TIMES tasks as samples to calculate the the average workload
+		 * done within 1 millisecond
 		 */
 		long start = 0;
 		long end = 0;
-		
-		// Elapsed Time in milli-seconds
+		// To save working time in milliseconds
 		ArrayList<Long> elapsedTime = new ArrayList<Long>();
-		
-		// empty the cpu before assign any tasks in it
-		cpu1.emptyTasks();
+
+		// Sample size of tasks
+		final int TIMES = 100;
+
+		Task[] stdTasks, priTasks;
+		int stdWork, priWork;
+
+		// Let them run and save the elapsed time.
 		start = System.currentTimeMillis();
-		cpu1.perform(tasks);
+		stdTasks = stdCpu.performTimesOf(TIMES);
 		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
-		System.out.println("StandardQueueByArr: Elapsed Time in milli seconds: "+ (end-start));
-		
-		// empty the cpu before assign any tasks in it
-		cpu2.emptyTasks();
+		stdWork = workloadOf(stdTasks);
+		elapsedTime.add(end - start);
+
 		start = System.currentTimeMillis();
-		cpu2.perform(tasks);
+		priTasks = priCpu.performTimesOf(TIMES);
 		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
-		System.out.println("HalfPrioQueueByArr: Elapsed Time in milli seconds: "+ (end-start));
-		
-		/* 
-		 * Test enqueue time and dequeue time separately. 
-		 * Equal importance.
-		 */
-		
-		/*
-		 * Enqueues
-		 */
-		// empty the cpu before assign any tasks in it
-		cpu1.emptyTasks();
-		start = System.currentTimeMillis();
-		cpu1.assign(tasks);
-		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
-		
-		// empty the cpu before assign any tasks in it
-		cpu2.emptyTasks();
-		start = System.currentTimeMillis();
-		cpu2.assign(tasks);
-		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
-		
-		/*
-		 * Dequeues
-		 */
-		start = System.currentTimeMillis();
-		cpu1.execute();
-		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
-		
-		start = System.currentTimeMillis();
-		cpu2.execute();
-		end = System.currentTimeMillis();
-		elapsedTime.add(end-start);
+		priWork = workloadOf(priTasks);
+		elapsedTime.add(end - start);
+
+		// Calculate the efficiencies
+		int efficiencyStd = (int) (stdWork / elapsedTime.get(0));
+		int efficiencyPri = (int) (priWork / elapsedTime.get(1));
+
+		System.out.printf("Efficiency for StandardQueueByLinkedList is: %d\n", efficiencyStd);
+		System.out.printf("Efficiency for PriorityQueueBySinglyLinedList is: %d\n", efficiencyPri);
+
+		return new int[] { efficiencyStd, efficiencyPri };
 	}
+
+	static int workloadOf(Task[] tasks) {
+		int sum = 0;
+		for (int i = 0; i < tasks.length; ++i) {
+			sum += tasks[i].getImportance();
+		}
+		return sum;
+	}
+
 }

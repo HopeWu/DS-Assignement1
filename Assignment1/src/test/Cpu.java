@@ -71,12 +71,16 @@ public class Cpu {
 
 	/**
 	 * Execute the first @times tasks from the load of this cpu.
+	 * @return the tasks that have been performed
 	 */
-	public void performTimesOf(int times) {
+	public Task[] performTimesOf(int times) {
 
+		Task[] tasks = new Task[times];
 		int i = 0;
-		for (i = 0; i < times; ++i)
-			this.executeOnce();
+		for (i = 0; i < times; ++i) {
+			tasks[i] = this.executeOnce();
+		}
+		return tasks;
 	}
 
 	/**
@@ -103,7 +107,7 @@ public class Cpu {
 		}
 	}
 
-	public void executeOnce() {
+	public Task executeOnce() {
 		/*
 		 * Execute all the tasks inside the queue and this queue becomes empty.
 		 */
@@ -111,7 +115,9 @@ public class Cpu {
 		if (!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
+			return task;
 		}
+		return null;
 	}
 
 	public void emptyTasks() {
