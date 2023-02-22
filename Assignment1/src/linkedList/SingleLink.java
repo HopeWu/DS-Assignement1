@@ -91,7 +91,7 @@ public class SingleLink<T> {
     }
     
 	// delete the node with the specific index
-    public SingleTaskNode<T> remove(int index){
+    public T remove(int index){
     	 if (getLength() == 0){
     		System.out.println("This linked list is null");
          	return null;
@@ -115,7 +115,7 @@ public class SingleLink<T> {
         		node.setNext(temp.getNext());
         		temp.setNext(null);
         		length--;
-        		return removedNode;
+        		return removedNode.getData();
         	}
         	else {
         		return removeFromTail();
@@ -125,7 +125,7 @@ public class SingleLink<T> {
 
     
     // delete node from head
-    public SingleTaskNode<T> removeFromHead() {
+    public T removeFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
@@ -135,11 +135,11 @@ public class SingleLink<T> {
         SingleTaskNode<T> node = head.getNext();
         head = node;
         length --;
-        return LastHead;
+        return LastHead.getData();
     }
 
     // delete node from tail
-    public SingleTaskNode<T> removeFromTail() {
+    public T removeFromTail() {
     	if(head==null){
             System.out.println("This linked list is null");
             return null;
@@ -154,7 +154,7 @@ public class SingleLink<T> {
         node.setNext(null);
         tail = node;
         length --;
-		return LastTail;
+		return LastTail.getData();
     }
 
 

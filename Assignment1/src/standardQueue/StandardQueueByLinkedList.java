@@ -24,7 +24,7 @@ public class StandardQueueByLinkedList implements Queue {
             throw new RuntimeException("This queue is empty.");
         }
         
-		return singleLink.removeFromTail().getData();
+		return singleLink.removeFromTail();
 	}
 
 	@Override
