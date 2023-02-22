@@ -9,21 +9,7 @@ public class Dataset {
 	public Dataset() {
 		super();
 		this.rand = new Random();
-	}
-
-	/*
-	 * examples to use this class
-	 */
-	public static void main(String[] args) {
-		// configure the distribution for the data
-		Dataset dataset = new Dataset();
-		dataset.setProbability(1, 0.1);
-		dataset.setProbability(10, 0.7);
-		dataset.setProbability(5, 0.2);
-		Task[] tasks = dataset.getData(100);
-		for (Task task: tasks) {
-			System.out.println(task.getImportance());
-		}
+		this.upperbound = 10;
 	}
 
 	// to save the input distribution of data
@@ -31,9 +17,11 @@ public class Dataset {
 	// to save the rescaledDist of data
 	private Hashtable<Integer, Double> rescaledDist;
 	// to save the generate dictionary, according to which we generate importance
-	private Hashtable<Integer, Integer> generate;
+	private Hashtable<Integer, Integer> generatingDict;
 	// to generate random digit
 	private Random rand;
+	// upper bound, for generating random digits
+	private int upperbound;
 
 	public void setProbability(int digit, double probability) {
 		if (this.distribution == null)
@@ -60,7 +48,7 @@ public class Dataset {
 
 		Task[] tasks = new Task[size];
 		for (i = 0; i < tasks.length; ++i) {
-			importance = this.generate.get(this.randInt());
+			importance = this.generatingDict.get(this.randInt());
 			tasks[i] = new Task(importance);
 		}
 		return tasks;
@@ -68,12 +56,13 @@ public class Dataset {
 	
 	private void setDictionaries() {
 		this.rescaledDist = new Hashtable<Integer, Double>();
-		this.generate = new Hashtable<Integer, Integer>();
+		this.generatingDict = new Hashtable<Integer, Integer>();
 
 		// scale the probabilities to make them sum to 1
-		Double sum = this.distribution.values().stream().reduce((x, y) -> x + y).get();
+		Double sum = 0.0;
+		sum = this.distribution.values().stream().reduce((x, y) -> x + y).get();
 		for (Integer key : this.distribution.keySet()) {
-			this.rescaledDist.put(key, this.distribution.get(key) / sum);
+			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
 
 		// prepare the generate dictionary
@@ -82,7 +71,7 @@ public class Dataset {
 			int steps = (int) ((this.rescaledDist.get(key) * 10));
 			int _start = start;
 			for (int i = _start; i < _start + steps; ++i, ++start) {
-				this.generate.put(i, key);
+				this.generatingDict.put(i, key);
 			}
 		}
 	}
@@ -94,8 +83,24 @@ public class Dataset {
 		
 		// Setting the upper bound to generate the
 		// random numbers in specific range
-		int upperbound = 10;
+		upperbound = 10;
 		
 		return rand.nextInt(upperbound);
 	}
+	
+	/*
+	 * examples to use this class
+	 */
+	public static void main(String[] args) {
+		// configure the distribution for the data
+		Dataset dataset = new Dataset();
+		dataset.setProbability(1, 0.1);
+		dataset.setProbability(10, 0.7);
+		dataset.setProbability(5, 0.2);
+		Task[] tasks = dataset.getData(100);
+		for (Task task: tasks) {
+			System.out.println(task.getImportance());
+		}
+	}
+
 }
