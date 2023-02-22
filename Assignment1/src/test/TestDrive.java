@@ -47,7 +47,7 @@ public class TestDrive {
 		dataset.setProbability(100, 0.1);
 		dataset.setProbability(1, 1);
 
-		// Generate the tasks
+		// Generate the tasks to assgin to both cpus
 		final int DATASIZE = 1000;
 		Task[] tasks = dataset.getData(DATASIZE);
 
@@ -55,7 +55,7 @@ public class TestDrive {
 		stdCpu.assign(tasks);
 		priCpu.assign(tasks);
 
-		/*
+		/**
 		 * Take the first @TIMES tasks as samples to calculate the the average workload
 		 * done within 1 millisecond
 		 */
@@ -65,8 +65,8 @@ public class TestDrive {
 		ArrayList<Long> elapsedTime = new ArrayList<Long>();
 
 		/** 
-		 * Sample size of tasks. Better not be less than 100, otherwise there comes 
-		 * divide by zero error since standard queue will do this less than 1 millisecond.
+		 * Sample size of tasks. Be aware of small values of this, which could lead to 
+		 * zero time, thus dividing by zero error.
 		 */
 		final int TIMES = 100;
 
