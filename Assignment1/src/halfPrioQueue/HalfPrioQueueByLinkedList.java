@@ -20,6 +20,7 @@ import task.Task;
 public class HalfPrioQueueByLinkedList implements Queue {
 
 	private SingleLink<Task> queue = new SingleLink<>();
+
     private int threshold = 5;
     private boolean randomSamplingFlag = false;
 

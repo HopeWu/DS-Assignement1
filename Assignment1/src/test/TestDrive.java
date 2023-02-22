@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import halfPrioQueue.HalfPrioQueueByArr;
 import halfPrioQueue.HalfPrioQueueByLinkedList;
 import priorityQueue.PriorityQueueBySinglyLinkedList;
+import priorityQueue.priorityQueueByDoublyLinkedList;
 import queue.Queue;
 import standardQueue.StandardQueueByArr;
 import standardQueue.StandardQueueByLinkedList;
@@ -31,7 +32,8 @@ public class TestDrive {
 
 		// Create the two queues used in cpus first.
 		Queue standardQueueByLinkedList = new StandardQueueByLinkedList();
-		Queue priorityQueueBySinglyLinedList = new HalfPrioQueueByLinkedList();
+		Queue priorityQueueBySinglyLinedList = new priorityQueueByDoublyLinkedList();
+
 
 		// Compose the queues with correspondent cpu
 		Cpu stdCpu = new Cpu(standardQueueByLinkedList);
@@ -42,11 +44,11 @@ public class TestDrive {
 
 		// Configure the dataset with the same probabilities of importance-1 tasks and
 		// importance-10 tasks
-		dataset.setProbability(10, 0.0001);
-		dataset.setProbability(1, 0.9);
+		dataset.setProbability(100, 0.1);
+		dataset.setProbability(1, 1);
 
 		// Generate the tasks
-		final int DATASIZE = 10000;
+		final int DATASIZE = 1000;
 		Task[] tasks = dataset.getData(DATASIZE);
 
 		// Load the same work to both cpus
@@ -62,7 +64,10 @@ public class TestDrive {
 		// To save working time in milliseconds
 		ArrayList<Long> elapsedTime = new ArrayList<Long>();
 
-		// Sample size of tasks
+		/** 
+		 * Sample size of tasks. Better not be less than 100, otherwise there comes 
+		 * divide by zero error since standard queue will do this less than 1 millisecond.
+		 */
 		final int TIMES = 100;
 
 		Task[] stdTasks, priTasks;
@@ -74,17 +79,29 @@ public class TestDrive {
 		end = System.currentTimeMillis();
 		stdWork = workloadOf(stdTasks);
 		elapsedTime.add(end - start);
+		System.out.printf("workload that std did: %d\n", stdWork);
+		System.out.printf("time for std: %d\n", elapsedTime.get(0));
 
 		start = System.currentTimeMillis();
 		priTasks = priCpu.performTimesOf(TIMES);
 		end = System.currentTimeMillis();
 		priWork = workloadOf(priTasks);
 		elapsedTime.add(end - start);
+		System.out.printf("workload that pri did: %d\n", priWork);
+		System.out.printf("time for std: %d\n", elapsedTime.get(1));
 
 		// Calculate the efficiencies
 		int efficiencyStd = (int) (stdWork / elapsedTime.get(0));
 		int efficiencyPri = (int) (priWork / elapsedTime.get(1));
 
+		System.out.println("All tasks:");
+		System.out.println(Dataset.checkDistruibutionOf(tasks));
+		System.out.println("Std tasks:");
+		System.out.println(Dataset.checkDistruibutionOf(stdTasks));
+		System.out.println("Pri tasks:");
+		System.out.println(Dataset.checkDistruibutionOf(priTasks));
+		
+		System.out.println();
 		System.out.printf("Efficiency for StandardQueueByLinkedList is: %d\n", efficiencyStd);
 		System.out.printf("Efficiency for PriorityQueueBySinglyLinedList is: %d\n", efficiencyPri);
 
