@@ -86,7 +86,7 @@ public class PriorityQueueBySinglyLinkedList implements Queue {
 	@Override
 	public boolean isFull() {
 		// TODO Auto-generated method stub
-		return false;
+		return queue.isFull();
 	}
 
 }

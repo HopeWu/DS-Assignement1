@@ -176,6 +176,10 @@ public class SingleLink<T> {
         System.out.println();
     }
 
+    public boolean isFull() {
+    	return false;
+    }
+    
     // Clear the linked list
     public void clear(){
         head.setNext(null);
