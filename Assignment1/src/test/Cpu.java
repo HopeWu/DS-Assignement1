@@ -36,6 +36,13 @@ public class Cpu {
 		this.queue.enqueue(task);
 	}
 	/**
+	 * Execute the first task from the load of this cpu.
+	 */
+	public void performOnce() {
+
+		this.executeOnce();
+	}
+	/**
 	 * Execute all the tasks currently loaded with this cpu.
 	 */
 	public void perform() {
@@ -73,6 +80,17 @@ public class Cpu {
 		 */
 		Task task;
 		while(!queue.isEmpty()) {
+			task = queue.dequeue();
+			task.perform();
+		}
+	}
+	
+	public void executeOnce() {
+		/*
+		 * Execute all the tasks inside the queue and this queue becomes empty.
+		 */
+		Task task;
+		if(!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
 		}
