@@ -9,7 +9,7 @@ public class Dataset {
 	public Dataset() {
 		super();
 		this.rand = new Random();
-		this.upperbound = 10;
+		this.upperbound = 10000;
 	}
 
 	// to save the input distribution of data
@@ -61,6 +61,7 @@ public class Dataset {
 		// scale the probabilities to make them sum to 1
 		Double sum = 0.0;
 		sum = this.distribution.values().stream().reduce((x, y) -> x + y).get();
+		System.out.println(sum);
 		for (Integer key : this.distribution.keySet()) {
 			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
@@ -68,7 +69,7 @@ public class Dataset {
 		// prepare the generate dictionary
 		int start = 0;
 		for (Integer key : this.rescaledDist.keySet()) {
-			int steps = (int) ((this.rescaledDist.get(key) * 10));
+			int steps = (int) ((this.rescaledDist.get(key) * upperbound));
 			int _start = start;
 			for (int i = _start; i < _start + steps; ++i, ++start) {
 				this.generatingDict.put(i, key);
@@ -83,7 +84,6 @@ public class Dataset {
 		
 		// Setting the upper bound to generate the
 		// random numbers in specific range
-		upperbound = 10;
 		
 		return rand.nextInt(upperbound);
 	}
