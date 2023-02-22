@@ -11,54 +11,58 @@ public class Cpu {
 		this.queue = queue;
 	}
 	
+	/**
+	 * Assign or load this cpu with a bunch of tasks.
+	 * @tasks
+	 */
 	public void assign(Task[] tasks) {
-		/*
-		 *  Assign a bunch of tasks for the cpu to do.
-		 *  
-		 *  @tasks, an array of tasks
-		 */
 		
-		if (this.queue.isFull()) return;
+		if (this.queue.isFull()) throw new RuntimeException("This cpu is already full.");
 		
 		for( int i = 0; i < tasks.length; ++i) {
 			this.queue.enqueue(tasks[i]);
 		}
 	}
 	
+	/**
+	 * Assign or load this cpu with one single task.
+	 * @task
+	 * @author haopengwu
+	 */
 	public void assign(Task task) {
-		/*
-		 * Assign a single task for the cpu to do.
-		 * 
-		 * @tasks, one task
-		 */
+
+		if (this.queue.isFull()) throw new RuntimeException("This cpu is already full.");
 		
+		this.queue.enqueue(task);
 	}
-	
+	/**
+	 * Execute all the tasks currently loaded with this cpu.
+	 */
 	public void perform() {
-		/*
-		 * Execute all the tasks in the queue.
-		 */
+
 		this.execute();
 	}
-	
+	/**
+	 * Perform a bunch of tasks, before which clear the cpu.
+	 * 
+	 * @tasks, an array of tasks to be executed
+	 *
+	 */
 	public void perform(Task[] tasks) {
-		/*
-		 * Assign a bunch of tasks and execute all the tasks in the queue.
-		 * 
-		 * @tasks, an array of tasks to be executed
-		 *
-		 */
+		
+		this.emptyTasks();
 		this.assign(tasks);
 		this.execute();
 	}
 	
-	public void perform(Task task) {
-		/*
-		 * Assign a single task and execute all the tasks in the queue.
-		 * 
-		 * @tasks, an array of tasks to be executed
-		 *
-		 */
+	/**
+	 * Assign a single task and execute all the tasks in the queue.
+	 * 
+	 * @task, an array of tasks to be executed
+	 * @deprecated useless and confusing method, to be deleted
+	 */
+	private void perform(Task task) {
+		
 		this.assign(task);
 		this.execute();
 	}
