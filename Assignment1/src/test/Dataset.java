@@ -68,7 +68,7 @@ public class Dataset {
 		// prepare the generate dictionary
 		int start = 0;
 		for (Integer key : this.rescaledDist.keySet()) {
-			int steps = (int) ((this.rescaledDist.get(key) * upperbound));
+			int steps = (int) Math.ceil((this.rescaledDist.get(key) * upperbound));
 			int _start = start;
 			for (int i = _start; i < _start + steps; ++i, ++start) {
 				this.generatingDict.put(i, key);
