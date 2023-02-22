@@ -9,7 +9,10 @@ public class Task {
 	private int importance;
 	
 	
-	
+	/**
+	 * 
+	 * @return importance of each task performed, which can be utilized later
+	 */
 	public int perform() {
 		// do a heavy task that needs 10 milliseconds
 //		try {
