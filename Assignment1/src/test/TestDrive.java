@@ -88,7 +88,7 @@ public class TestDrive {
 		priWork = workloadOf(priTasks);
 		elapsedTime.add(end - start);
 		System.out.printf("workload that pri did: %d\n", priWork);
-		System.out.printf("time for std: %d\n", elapsedTime.get(1));
+		System.out.printf("time for pri: %d\n", elapsedTime.get(1));
 
 		// Calculate the efficiencies
 		int efficiencyStd = (int) (stdWork / elapsedTime.get(0));
