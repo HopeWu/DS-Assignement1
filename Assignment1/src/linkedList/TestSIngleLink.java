@@ -8,9 +8,9 @@ public class TestSIngleLink {
         mySingleLinkedList.getTail();
         System.out.println(mySingleLinkedList.getLength());
         
-        mySingleLinkedList.insertFromTail(10);
+        mySingleLinkedList.insertFromHead(null);
         System.out.println(mySingleLinkedList.getLength());
-        mySingleLinkedList.insertFromTail(99);
+        mySingleLinkedList.insertFromTail(null);
         System.out.println(mySingleLinkedList.getLength());
         mySingleLinkedList.insertFromTail(1);
         System.out.println(mySingleLinkedList.getLength());
@@ -22,10 +22,11 @@ public class TestSIngleLink {
         mySingleLinkedList.removeFromHead();
         mySingleLinkedList.removeFromTail();
         mySingleLinkedList.remove(2);
+        mySingleLinkedList.removeFromTail();
         System.out.println(mySingleLinkedList.getLength());
         mySingleLinkedList.detailPrint();
-   
-        System.out.println(mySingleLinkedList.getNode(1).getData());
+        mySingleLinkedList.clear();
+        mySingleLinkedList.detailPrint();
 
 	}
 }

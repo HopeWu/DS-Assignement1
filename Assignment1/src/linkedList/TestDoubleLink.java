@@ -8,14 +8,15 @@ public class TestDoubleLink {
 	        
 		myDoubleList.getTail();
 	        
-		myDoubleList.insertFromHead(10);
-		myDoubleList.insertFromTail(99);
+		myDoubleList.insertFromHead(null);
+		myDoubleList.insertFromTail(null);
 		myDoubleList.insertFromTail(1);
 		myDoubleList.insertFromHead(2);
 		System.out.println(myDoubleList.getLength());
         myDoubleList.detailPrint();
         
         myDoubleList.removeFromHead();
+        myDoubleList.detailPrint();
         myDoubleList.removeFromTail();
         myDoubleList.remove(1);
         System.out.println(myDoubleList.getLength());
