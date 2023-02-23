@@ -9,7 +9,7 @@ public class Dataset {
 	public Dataset() {
 		super();
 		this.rand = new Random();
-		this.upperbound = 10000;
+		this.upperbound = 10;
 	}
 
 	// to save the input distribution of data
@@ -41,6 +41,9 @@ public class Dataset {
 			return null;
 		}
 
+		/**
+		 * So that the smallest probability can be seen.
+		 */
 		this.setDictionaries();
 		
 		int i = 0;
@@ -64,18 +67,33 @@ public class Dataset {
 		for (Integer key : this.distribution.keySet()) {
 			this.rescaledDist.put(key, this.distribution.get(key) / sum );
 		}
+				
+		setRandUpperBound();
 
 		// prepare the generate dictionary
-		int start = 0;
+		int start = 1;
 		for (Integer key : this.rescaledDist.keySet()) {
-			int steps = (int) Math.ceil((this.rescaledDist.get(key) * upperbound));
+			int steps = (int) Math.round((this.rescaledDist.get(key) * upperbound));
 			int _start = start;
 			for (int i = _start; i < _start + steps; ++i, ++start) {
 				this.generatingDict.put(i, key);
 			}
 		}
+		//System.out.println(generatingDict);
 	}
 	
+	/**
+	 * So that the smallest probability can be seen.
+	 */
+	private void setRandUpperBound() {
+		double smallest = Double.POSITIVE_INFINITY;;
+		for (Integer key : this.rescaledDist.keySet()) {
+			if(this.rescaledDist.get(key) < smallest)
+				smallest = this.rescaledDist.get(key);
+		}
+		this.upperbound = (int) Math.ceil(1.0/smallest);
+	}
+
 	/*
 	 * randomly return ints from 0 to 9
 	 */
@@ -84,7 +102,28 @@ public class Dataset {
 		// Setting the upper bound to generate the
 		// random numbers in specific range
 		
-		return rand.nextInt(upperbound);
+		return rand.nextInt(upperbound)+1;
+	}
+	
+	/**
+	 * Check the importance distribution of a bunch of tasks. 
+	 * Return a hashtable, which shows the counts of each importance within a given 
+	 * bunch of tasks.
+	 * @param tasks
+	 * @return
+	 */
+	public static Hashtable<Integer, Integer> checkDistruibutionOf(Task[] tasks){
+		Hashtable<Integer, Integer> hashtable = new Hashtable<>();
+		int i;
+		for(i = 0; i < tasks.length; ++i) {
+			Integer importance = tasks[i].getImportance();
+			Integer count = hashtable.get(importance);
+			if (count == null) 
+				hashtable.put(importance, 1);
+			else 
+				hashtable.put(importance, ++count);
+		}
+		return hashtable;
 	}
 	
 	/*
