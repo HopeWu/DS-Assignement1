@@ -4,7 +4,11 @@ import linkedList.DoubleLink;
 import queue.Queue;
 import task.Task;
 
+<<<<<<< HEAD
 public class PriorityQueueByDoublyLinkedList implements Queue{
+=======
+public class PriorityQueueByDoublyLinkedList extends Queue{
+>>>>>>> 514f387 (let every implementation extends instead of implementing Queue)
 	
 	private DoubleLink<Task> queue = new DoubleLink<Task>();
 	

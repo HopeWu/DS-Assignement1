@@ -12,6 +12,7 @@ public abstract class Queue {
 	public abstract boolean isFull();
 	public abstract int size();
 	
+	@Override
 	public String toString() {
         return getClass().getName();
     }

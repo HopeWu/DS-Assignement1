@@ -6,7 +6,7 @@ import task.Task;
 /**
  * This is a FIFO (first in, first out) queue implemented by array.
  */
-public class StandardQueueByArr implements Queue {
+public class StandardQueueByArr extends Queue {
 
 	private Task[] queue;
 	private int front;  // index of the front of the queue

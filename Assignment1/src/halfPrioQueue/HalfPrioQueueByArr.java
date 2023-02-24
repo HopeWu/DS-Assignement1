@@ -15,7 +15,7 @@ import task.Task;
  * @author Prateek Dash
  *
  */
-public class HalfPrioQueueByArr implements Queue {
+public class HalfPrioQueueByArr extends Queue {
 
 	private Task[] queue;    
     private int size;
