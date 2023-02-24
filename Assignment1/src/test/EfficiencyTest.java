@@ -8,6 +8,7 @@ import task.Task;
 
 /**
  * Compare two queues, efficiency wise.
+ * 
  * Compare the average workload performed, given the same amount of time period, within one millisecond, given
  * the same task population, sized by this.datasize. Note that although the size of actually performed tasks is fixed and 
  * set by this.batchSize, the tasks performed by the two varies due to their different strategies. e.g. a standard queue
@@ -36,14 +37,17 @@ public class EfficiencyTest {
 	 * The first queue to be composed in a cpu and then tested.
 	 * @param queue1
 	 */
+
 	public void setQueue1(Queue queue1) {
 		this.queue1 = queue1;
 	}
+
 
 	/**
 	 * The second queue to be composed in a cpu and then tested.
 	 * @param queue2
 	 */
+
 	public void setQueue2(Queue queue2) {
 		this.queue2 = queue2;
 	}
@@ -52,6 +56,7 @@ public class EfficiencyTest {
 	 * Set the population size for the same data set to be performed on by the two queues.
 	 * @param datasize
 	 */
+
 	public void setDatasize(int datasize) {
 		this.datasize = datasize;
 	}
@@ -60,10 +65,10 @@ public class EfficiencyTest {
 	 * The size of tasks that are actually performed by the two queues.
 	 * @param batchSize
 	 */
+
 	public void setBatchSize(int batchSize) {
 		this.batchSize = batchSize;
 	}
-
 	
 	/**
 	 * 
@@ -80,6 +85,7 @@ public class EfficiencyTest {
 	/**
 	 * Run the configured task.
 	 */
+
 	public void run() {
 		_run();
 	}
@@ -122,6 +128,7 @@ public class EfficiencyTest {
 		System.out.printf("Time for %s: %d\n", queue1, elapsedTime.get(0));
 		System.out.println();
 
+
 		start = System.currentTimeMillis();
 		priTasks = priCpu.performTimesOf(batchSize);
 		end = System.currentTimeMillis();
@@ -139,6 +146,7 @@ public class EfficiencyTest {
 		System.out.print("Task population: ");
 		System.out.println(Dataset.checkDistruibutionOf(tasks));
 		System.out.println();
+
 		System.out.printf("%s tasks's distribution: ", queue1);
 		System.out.println(Dataset.checkDistruibutionOf(stdTasks));
 		System.out.printf("%s tasks's distribution: ", queue2);
