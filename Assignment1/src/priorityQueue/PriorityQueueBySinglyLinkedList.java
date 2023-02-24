@@ -3,7 +3,7 @@ import linkedList.SingleLink;
 import queue.Queue;
 import task.Task;
 
-public class PriorityQueueBySinglyLinkedList implements Queue {
+public class PriorityQueueBySinglyLinkedList extends Queue {
 
 	private SingleLink<Task> queue = new SingleLink<Task>();
 	

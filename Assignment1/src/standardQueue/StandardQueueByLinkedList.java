@@ -4,7 +4,7 @@ import linkedList.SingleLink;
 import queue.Queue;
 import task.Task;
 
-public class StandardQueueByLinkedList implements Queue {
+public class StandardQueueByLinkedList extends Queue {
 
 	private SingleLink<Task> singleLink;
 	

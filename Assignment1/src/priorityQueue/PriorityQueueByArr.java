@@ -6,7 +6,7 @@ import task.Task;
 /**
  * This is a priority queue implemented by array.
  */
-public class PriorityQueueByArr implements Queue {
+public class PriorityQueueByArr extends Queue {
 
     private Task[] queue;    
     private int size;
