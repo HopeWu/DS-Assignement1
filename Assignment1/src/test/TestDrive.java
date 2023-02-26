@@ -2,16 +2,17 @@ package test;
 
 import halfPrioQueue.HalfPrioQueueByArr;
 import halfPrioQueue.HalfPrioQueueByLinkedList;
-import priorityQueue.PriorityQueueBySinglyLinkedList;
 import priorityQueue.PriorityQueueByArr;
-import priorityQueue.PriorityQueueByDoublyLinkedList;
+import priorityQueue.PriorityQueueBySinglyLinkedList;
 import queue.Queue;
 import standardQueue.StandardQueueByArr;
 import standardQueue.StandardQueueByLinkedList;
+import standardQueue.StandardQueueByLinkedListOptim;
 import task.Task;
 
 public class TestDrive {
 	static public void main(String[] string) {
+
 
 //		experimentOne();
 //		System.out.println();
@@ -19,11 +20,8 @@ public class TestDrive {
 			experimentTwo_LinkedList(400, i);
 			System.out.println();
 		}
-		experimentTwo_Array(100,0.1);
-		
-		
 	}
-	
+
 	static void experimentOne() {
 		
 		EfficiencyTest efficiencyTest = new EfficiencyTest();
@@ -44,7 +42,6 @@ public class TestDrive {
 		efficiencyTest2.setQueue2(new PriorityQueueBySinglyLinkedList());
 		efficiencyTest2.setDatasize(5000);
 		efficiencyTest2.setBatchSize(batch_size);
-
 		if(rate == 0.1) {
 			efficiencyTest2.setDatasetProbability(100, rate);
 			efficiencyTest2.setDatasetProbability(1, 1.0);
@@ -59,6 +56,7 @@ public class TestDrive {
 		}
 		efficiencyTest2.run();
 	}
+	
 	
 	static void experimentTwo_Array(int batch_size, double rate) {
 		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
@@ -81,4 +79,5 @@ public class TestDrive {
 		}
 		efficiencyTest2.run();
 	}
+
 }

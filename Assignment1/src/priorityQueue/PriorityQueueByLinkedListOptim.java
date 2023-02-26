@@ -4,8 +4,12 @@ import linkedList.SingleTaskNode;
 import queue.Queue;
 import task.Task;
 
-public class PriorityQueueBySinglyLinkedList extends Queue {
-
+/**
+ * This is an optimized version of priority queue implemented by singly linked list
+ * @author Yan
+ *
+ */
+public class PriorityQueueByLinkedListOptim extends Queue {
 	private SingleLink<Task> queue = new SingleLink<Task>();
 	
 	/**
@@ -14,31 +18,14 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
 	 */
 	@Override
 	public void enqueue(Task task) {
-		// TODO Auto-generated method stub
 		queue.insertFromTail(task);
 	}
 	
 	/**
-	 * Removes an element with the highest priority.
+	 * Removes the element with the highest priority.
 	 */
 	@Override
 	public Task dequeue() {
-		if (isEmpty()) {
-            throw new RuntimeException("This queue is empty.");
-        }
-        // Find the index of the element with the highest priority.
-		int index = 1;
-        for (int i = 1; i <queue.getLength(); i++) {
-            if( queue.getNode(i).getData().getImportance()>queue.getNode(index).getData().getImportance())
-            	index=i;
-        }
-        Task task = queue.getNode(index).getData();
-        // Move all the elements forward which follow the removed element.
-        queue.remove(index);
-        return task;
-	}
-	
-	public Task dequeue_opti() {
 		if (isEmpty()) {
             throw new RuntimeException("This queue is empty.");
         }
@@ -71,12 +58,20 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
         if (isEmpty()) {
             throw new RuntimeException("This queue is empty");
         }
-        int index = 1;
-        for (int i = 1; i <queue.getLength(); i++) {
-            if( queue.getNode(i).getData().getImportance()>queue.getNode(index).getData().getImportance())
-            	index=i;
-        }
-        return queue.getNode(index).getData();
+		SingleTaskNode<Task> head = queue.getHead();
+		SingleTaskNode<Task> dummy = new SingleTaskNode<Task>(new Task(0), head);		
+		SingleTaskNode<Task> prev = dummy;
+		SingleTaskNode<Task> curr = null;
+		SingleTaskNode<Task> maxNode = null;
+		int maxValue = Integer.MIN_VALUE;
+		while ((curr = prev.getNext()) != null) {
+			if (curr.getData().getImportance() > maxValue) {
+				maxValue = curr.getData().getImportance();
+				maxNode = curr;		
+			}
+			prev = curr;
+		}
+		return maxNode.getData();
     }
 
 	/**
@@ -84,7 +79,6 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
 	 */
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return queue.getLength()==0;
 	}
 
@@ -93,7 +87,6 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return queue.getLength();
 	}
 
@@ -102,7 +95,6 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
 	 */
 	@Override
 	public void empty() {
-		// TODO Auto-generated method stub
         queue.clear();
 	}
 
@@ -111,8 +103,6 @@ public class PriorityQueueBySinglyLinkedList extends Queue {
 	 */
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
 		return queue.isFull();
 	}
-
 }

@@ -5,6 +5,7 @@ import task.Task;
 
 /**
  * This is a FIFO (first in, first out) queue implemented by array.
+ * @author Yan
  */
 public class StandardQueueByArr extends Queue {
 

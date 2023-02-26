@@ -65,7 +65,11 @@ public class SingleLink<T> {
 	// insert node from head
     public void insertFromHead(T data) {
         SingleTaskNode<T> node = new SingleTaskNode<T>(data, head);
-        if(length==0) {
+        if(data == null) {
+        	System.out.println("The insert task is null");
+        	length --;
+        }
+        else if(length==0) {
         	head = node;
         	tail = node;
         }
@@ -79,7 +83,10 @@ public class SingleLink<T> {
  
     // insert node from tail
     public void insertFromTail(T data) {
-    	if (head == null) {
+    	if(data == null) {
+        	System.out.println("The insert task is null");
+        }
+    	else if (head == null) {
     		insertFromHead(data);
         } else {
             SingleTaskNode<T> node = new SingleTaskNode<T>(data, null);
@@ -91,7 +98,7 @@ public class SingleLink<T> {
     }
     
 	// delete the node with the specific index
-    public SingleTaskNode<T> remove(int index){
+    public T remove(int index){
     	 if (getLength() == 0){
     		System.out.println("This linked list is null");
          	return null;
@@ -115,7 +122,7 @@ public class SingleLink<T> {
         		node.setNext(temp.getNext());
         		temp.setNext(null);
         		length--;
-        		return removedNode;
+        		return removedNode.getData();
         	}
         	else {
         		return removeFromTail();
@@ -125,7 +132,7 @@ public class SingleLink<T> {
 
     
     // delete node from head
-    public SingleTaskNode<T> removeFromHead() {
+    public T removeFromHead() {
         if(length==0) {
         	System.out.println("This linked list is null");
         	return null;
@@ -135,11 +142,11 @@ public class SingleLink<T> {
         SingleTaskNode<T> node = head.getNext();
         head = node;
         length --;
-        return LastHead;
+        return LastHead.getData();
     }
 
     // delete node from tail
-    public SingleTaskNode<T> removeFromTail() {
+    public T removeFromTail() {
     	if(head==null){
             System.out.println("This linked list is null");
             return null;
@@ -147,14 +154,21 @@ public class SingleLink<T> {
     	SingleTaskNode<T> LastTail = tail;
     	SingleTaskNode<T> node =head;
     	int i =1;
-    	while(i!=(length-1)) {
-    		node=node.getNext();
-        	i++;
-        }
-        node.setNext(null);
-        tail = node;
+    	
+    	if(head!=tail) {
+    		while(i!=(length-1)) {
+        		node=node.getNext();
+            	i++;
+            }
+    		node.setNext(null);
+            tail = node;
+    	}
+    	else {
+    		tail = node;
+    		head = node;
+    	}
         length --;
-		return LastTail;
+		return LastTail.getData();
     }
 
 
@@ -176,10 +190,25 @@ public class SingleLink<T> {
         System.out.println();
     }
 
+    public boolean isFull() {
+    	return false;
+    }
+    
     // Clear the linked list
     public void clear(){
-        head.setNext(null);
-        tail = head;
-        length=0;
+    	this.head = null;
+		this.tail = null;
+		length=0;
     }
+
+
+	public void setHead(SingleTaskNode<T> head) {
+		this.head = head;
+	}
+
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
 }
