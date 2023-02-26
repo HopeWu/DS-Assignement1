@@ -8,10 +8,7 @@ import task.Task;
 
 /**
  * Compare two queues, efficiency wise.
-<<<<<<< Upstream, based on 161cf9f06dc0c3ca385d0cb1ed7243ff336902fb
- * 
-=======
->>>>>>> 1e7cb52 add more comments
+ *
  * Compare the average workload performed, given the same amount of time period, within one millisecond, given
  * the same task population, sized by this.datasize. Note that although the size of actually performed tasks is fixed and 
  * set by this.batchSize, the tasks performed by the two varies due to their different strategies. e.g. a standard queue
