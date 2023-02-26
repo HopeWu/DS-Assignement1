@@ -1,14 +1,19 @@
 package queue;
 import task.Task;
 
-public interface Queue {
+public abstract class Queue {
 	
-	public void enqueue(Task task);
-	public Task dequeue();
-	public Task peek();
+	public abstract void  enqueue(Task task);
+	public abstract Task dequeue();
+	public abstract Task peek();
 	// empty this queue
-	public void empty();
-	public boolean isEmpty();
-	public boolean isFull();
-	public int size();
+	public abstract void empty();
+	public abstract boolean isEmpty();
+	public abstract boolean isFull();
+	public abstract int size();
+	
+	@Override
+	public String toString() {
+        return getClass().getName();
+    }
 } 

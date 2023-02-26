@@ -1,5 +1,7 @@
 package halfPrioQueue;
 
+import java.util.Random;
+
 import linkedList.SingleLink;
 import queue.Queue;
 import task.Task;
@@ -15,12 +17,23 @@ import task.Task;
  *
  */
 
-public class HalfPrioQueueByLinkedList implements Queue {
+public class HalfPrioQueueByLinkedList extends Queue {
 
 	private SingleLink<Task> queue = new SingleLink<>();
-	private final int THRESHOLD = 5;
+
+    private int threshold = 5;
+    private boolean randomSamplingFlag = false;
+
+    public void setThreshold(int threshold) {
+		this.threshold = threshold;
+	}
+
 	
-	/**
+	public void setRandomSamplingFlag(boolean randomSamplingFlag) {
+		this.randomSamplingFlag = randomSamplingFlag;
+	}
+    
+    /**
 	 * Adds an element to the rear of the queue.
 	 * @param task: the element that is to be added to the queue
 	 */
@@ -31,13 +44,13 @@ public class HalfPrioQueueByLinkedList implements Queue {
 	
 	/**
 	 * Removes an element with the highest priority within the specified
-	 * THRESHOLD value.
+	 * threshold value.
 	 */
 	@Override
 	public Task dequeue() {
 		if(isEmpty()) throw new RuntimeException("The queue is empty.");
 		
-		int index = getIndexOfMaxPriorityElement();
+		int index = randomSamplingFlag ? getIndexFromRandomSample() : getIndexOfMaxPriorityElement();
 		Task task = queue.getNode(index).getData();
 		queue.remove(index);
 		return task;
@@ -45,7 +58,7 @@ public class HalfPrioQueueByLinkedList implements Queue {
 
 	/**
 	 * Gets the element with the highest priority within the specified
-	 * THRESHOLD value.
+	 * threshold value.
 	 */
 	@Override
 	public Task peek() {
@@ -87,14 +100,14 @@ public class HalfPrioQueueByLinkedList implements Queue {
 	
 	/**
 	 * Retrieves the index of task with highest importance value within 
-	 * the last 'n' elements. The 'n' value is set by THRESHOLD constant.
-	 * E.g. If THRESHOLD value is 5 and the size of queue is 10, then  
+	 * the last 'n' elements. The 'n' value is set by threshold variable.
+	 * E.g. If threshold value is 5 and the size of queue is 10, then  
 	 * it would iterate through the elements 5 to 10 and returns the 
 	 * index of task with max importance value.
 	 */
 	private int getIndexOfMaxPriorityElement() {
 		int index = size();
-		int lastIndex = size() < THRESHOLD ? 0 : size() - THRESHOLD;
+		int lastIndex = size() < threshold ? 0 : size() - threshold;
 
 		for(int i = index; i > lastIndex; i--) {
 			if(queue.getNode(i).getData().getImportance() > queue.getNode(index).getData().getImportance()) {
@@ -103,5 +116,9 @@ public class HalfPrioQueueByLinkedList implements Queue {
 		}
 		
 		return index;
+	}
+	
+	private int getIndexFromRandomSample() {		
+		return new Random().nextInt();
 	}
 }

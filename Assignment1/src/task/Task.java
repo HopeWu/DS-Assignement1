@@ -15,6 +15,11 @@ public class Task {
 	 */
 	public int perform() {
 
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return getImportance();
 	}
 

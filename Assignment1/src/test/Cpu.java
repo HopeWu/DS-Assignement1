@@ -62,6 +62,20 @@ public class Cpu {
 	}
 	
 	/**
+	 * Perform a bunch of tasks, before which clear the cpu.
+	 * 
+	 * @tasks, an array of tasks to be executed
+	 *
+	 */
+	public void perform2(Task[] tasks) {
+
+		this.emptyTasks();
+		this.assign(tasks);
+		this.execute2();
+	}
+	
+	
+	/**
 	 * Execute the first task from the load of this cpu.
 	 */
 	public void performOnce() {
@@ -104,6 +118,15 @@ public class Cpu {
 		while (!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
+		}
+	}
+	
+	public void execute2() {
+		/*
+		 * Execute all the tasks inside the queue, no sleep time.
+		 */
+		while (!queue.isEmpty()) {
+			queue.dequeue();
 		}
 	}
 

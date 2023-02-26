@@ -9,7 +9,7 @@ import task.Task;
  * @author Yan
  *
  */
-public class PriorityQueueByLinkedListOptim implements Queue {
+public class PriorityQueueByLinkedListOptim extends Queue {
 	private SingleLink<Task> queue = new SingleLink<Task>();
 	
 	/**

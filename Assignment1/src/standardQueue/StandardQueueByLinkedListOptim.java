@@ -9,7 +9,7 @@ import task.Task;
  * @author Yan
  *
  */
-public class StandardQueueByLinkedListOptim implements Queue {
+public class StandardQueueByLinkedListOptim extends Queue {
 	private SingleLink<Task> singleLink;
 	
 	public StandardQueueByLinkedListOptim(){
