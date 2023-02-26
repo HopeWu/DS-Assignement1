@@ -8,8 +8,14 @@ import task.Task;
 
 /**
  * Compare two queues, efficiency wise.
- * Compare the average workload performed, given the same amount of time, given
- * the same tasks already in the queue, importance considered.
+ * Compare the average workload performed, given the same amount of time period, within one millisecond, given
+ * the same task population, sized by this.datasize. Note that although the size of actually performed tasks is fixed and 
+ * set by this.batchSize, the tasks performed by the two varies due to their different strategies. e.g. a standard queue
+ * simply follows a FIFO manner. a priority queue lets the task with highest priority to perform first. Thus, there is
+ * always more high-importance tasks performed by a priority queue than a standard queue.
+ * 
+ * We will compose the two queues into two different cpus and test on the cpus. A cpu can be treated like a wrapper
+ * of a queue.
  * 
  * @author haopengwu
  */
@@ -26,28 +32,54 @@ public class EfficiencyTest {
 		this.dataset = new Dataset();
 	}
 
+	/**
+	 * The first queue to be composed in a cpu and then tested.
+	 * @param queue1
+	 */
 	public void setQueue1(Queue queue1) {
 		this.queue1 = queue1;
 	}
 
+	/**
+	 * The second queue to be composed in a cpu and then tested.
+	 * @param queue2
+	 */
 	public void setQueue2(Queue queue2) {
 		this.queue2 = queue2;
 	}
 
+	/**
+	 * Set the population size for the same data set to be performed on by the two queues.
+	 * @param datasize
+	 */
 	public void setDatasize(int datasize) {
 		this.datasize = datasize;
 	}
 
+	/**
+	 * The size of tasks that are actually performed by the two queues.
+	 * @param batchSize
+	 */
 	public void setBatchSize(int batchSize) {
 		this.batchSize = batchSize;
 	}
 
-	// Configure the dataset with the same probabilities of importance-1 tasks and
-	// importance-10 tasks
-	public void setDatasetProbability(int digit, double probability) {
-		this.dataset.setProbability(digit, probability);
+	
+	/**
+	 * 
+	 * Configure the probability of occurrence for the tasks with the specified importance. 
+	 * e.g. setDatasetProbability(100, 0.1); means the 10% tasks from the population is of importance 100.
+	 * 
+	 * @param importance
+	 * @param probability
+	 */
+	public void setDatasetProbability(int importance, double probability) {
+		this.dataset.setProbability(importance, probability);
 	}
 
+	/**
+	 * Run the configured task.
+	 */
 	public void run() {
 		_run();
 	}
@@ -86,16 +118,17 @@ public class EfficiencyTest {
 		end = System.currentTimeMillis();
 		stdWork = workloadOf(stdTasks);
 		elapsedTime.add(end - start);
-		System.out.printf("workload of %s Cpu: %d\n", queue1, stdWork);
-		System.out.printf("time for %s: %d\n", queue1, elapsedTime.get(0));
+		System.out.printf("Workload of %s Cpu: %d\n", queue1, stdWork);
+		System.out.printf("Time for %s: %d\n", queue1, elapsedTime.get(0));
+		System.out.println();
 
 		start = System.currentTimeMillis();
 		priTasks = priCpu.performTimesOf(batchSize);
 		end = System.currentTimeMillis();
 		priWork = workloadOf(priTasks);
 		elapsedTime.add(end - start);
-		System.out.printf("workload of %s Cpu: %d\n", queue2, priWork);
-		System.out.printf("time for %s: %d\n", queue2, elapsedTime.get(1));
+		System.out.printf("Workload of %s Cpu: %d\n", queue2, priWork);
+		System.out.printf("Time for %s: %d\n", queue2, elapsedTime.get(1));
 
 		// Calculate the efficiencies
 		int efficiency1 = (int) (stdWork / elapsedTime.get(0));
@@ -103,8 +136,9 @@ public class EfficiencyTest {
 		
 		System.out.println();
 
-		System.out.println("All tasks:");
+		System.out.print("Task population: ");
 		System.out.println(Dataset.checkDistruibutionOf(tasks));
+		System.out.println();
 		System.out.printf("%s tasks's distribution: ", queue1);
 		System.out.println(Dataset.checkDistruibutionOf(stdTasks));
 		System.out.printf("%s tasks's distribution: ", queue2);
