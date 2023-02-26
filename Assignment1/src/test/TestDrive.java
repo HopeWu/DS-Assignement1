@@ -41,4 +41,71 @@ public class TestDrive {
 		PerformanceTest performanceTest = new PerformanceTest();
 		performanceTest.run();
 	}
+	
+	static void experimentTwo_LinkedList(int batch_size, double rate) {
+		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
+		
+		efficiencyTest2.setQueue1(new HalfPrioQueueByLinkedList());
+		efficiencyTest2.setQueue2(new PriorityQueueBySinglyLinkedList());
+		efficiencyTest2.setDatasize(5000);
+		efficiencyTest2.setBatchSize(batch_size);
+		if(rate == 0.1) {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1.0);
+		}
+		else if(rate==0.9){
+			efficiencyTest2.setDatasetProbability(100, 1.0);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		else {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		efficiencyTest2.run();
+	}
+	
+	
+	static void experimentTwo_Array(int batch_size, double rate) {
+		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
+		
+		efficiencyTest2.setQueue1(new HalfPrioQueueByArr(5000));
+		efficiencyTest2.setQueue2(new PriorityQueueByArr(5000));
+		efficiencyTest2.setDatasize(5000);
+		efficiencyTest2.setBatchSize(batch_size);
+		if(rate == 0.1) {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1.0);
+		}
+		else if(rate==0.9){
+			efficiencyTest2.setDatasetProbability(100, 1.0);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		else {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		efficiencyTest2.run();
+	}
+
+	static void experimentTwo_OptimizedLinkedList(int batch_size, double rate) {
+		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
+		
+		efficiencyTest2.setQueue1(new HalfPrioQueueByLinkedList());
+		efficiencyTest2.setQueue2(new PriorityQueueByLinkedListOptim());
+		efficiencyTest2.setDatasize(5000);
+		efficiencyTest2.setBatchSize(batch_size);
+		if(rate == 0.1) {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1.0);
+		}
+		else if(rate==0.9){
+			efficiencyTest2.setDatasetProbability(100, 1.0);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		else {
+			efficiencyTest2.setDatasetProbability(100, rate);
+			efficiencyTest2.setDatasetProbability(1, 1-rate);
+		}
+		efficiencyTest2.run();
+	}
 }
