@@ -1,102 +1,177 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-
 import halfPrioQueue.HalfPrioQueueByArr;
 import halfPrioQueue.HalfPrioQueueByLinkedList;
+import priorityQueue.PriorityQueueByArr;
 import priorityQueue.PriorityQueueBySinglyLinkedList;
+import priorityQueue.PriorityQueueByLinkedListOptim;
 import queue.Queue;
 import standardQueue.StandardQueueByArr;
 import standardQueue.StandardQueueByLinkedList;
+import standardQueue.StandardQueueByLinkedListOptim;
 import task.Task;
 
 public class TestDrive {
 	static public void main(String[] string) {
-
-		stdVsPriEffLink();
+		testStd();
+		testPrio();
+//		testHalfPrio();
 	}
 
 	/**
-	 * StandardQueueByLinkedList vs PriorityQueueBySinglyLinedList, efficiency wise.
-	 * Compare the average workload performed, given the same amount of time, given
-	 * the same tasks already in the queue, importance considered.
-	 * 
-	 * @author haopengwu
+	 * Test the performance of StandardQueueByArr vs StandardQueueByLinkedList.
+	 * Run each experiment 5 times and work out an average time for each data size. 
 	 */
-	private static int[] stdVsPriEffLink() {
-		/*
-		 * construct the two cpus.
-		 */
-
-		// Create the two queues used in cpus first.
-		Queue standardQueueByLinkedList = new StandardQueueByLinkedList();
-		Queue priorityQueueBySinglyLinedList = new HalfPrioQueueByLinkedList();
-
-		// Compose the queues with correspondent cpu
-		Cpu stdCpu = new Cpu(standardQueueByLinkedList);
-		Cpu priCpu = new Cpu(priorityQueueBySinglyLinedList);
-
+	private static void testStd() {
+		
 		// Create test data
 		Dataset dataset = new Dataset();
 
-		// Configure the dataset with the same probabilities of importance-1 tasks and
-		// importance-10 tasks
-		dataset.setProbability(10, 0.0001);
-		dataset.setProbability(1, 0.9);
-
-		// Generate the tasks
-		final int DATASIZE = 10000;
-		Task[] tasks = dataset.getData(DATASIZE);
-
-		// Load the same work to both cpus
-		stdCpu.assign(tasks);
-		priCpu.assign(tasks);
-
-		/*
-		 * Take the first @TIMES tasks as samples to calculate the the average workload
-		 * done within 1 millisecond
-		 */
-		long start = 0;
-		long end = 0;
-		// To save working time in milliseconds
-		ArrayList<Long> elapsedTime = new ArrayList<Long>();
-
-		// Sample size of tasks
-		final int TIMES = 100;
-
-		Task[] stdTasks, priTasks;
-		int stdWork, priWork;
-
-		// Let them run and save the elapsed time.
-		start = System.currentTimeMillis();
-		stdTasks = stdCpu.performTimesOf(TIMES);
-		end = System.currentTimeMillis();
-		stdWork = workloadOf(stdTasks);
-		elapsedTime.add(end - start);
-
-		start = System.currentTimeMillis();
-		priTasks = priCpu.performTimesOf(TIMES);
-		end = System.currentTimeMillis();
-		priWork = workloadOf(priTasks);
-		elapsedTime.add(end - start);
-
-		// Calculate the efficiencies
-		int efficiencyStd = (int) (stdWork / elapsedTime.get(0));
-		int efficiencyPri = (int) (priWork / elapsedTime.get(1));
-
-		System.out.printf("Efficiency for StandardQueueByLinkedList is: %d\n", efficiencyStd);
-		System.out.printf("Efficiency for PriorityQueueBySinglyLinedList is: %d\n", efficiencyPri);
-
-		return new int[] { efficiencyStd, efficiencyPri };
-	}
-
-	static int workloadOf(Task[] tasks) {
-		int sum = 0;
-		for (int i = 0; i < tasks.length; ++i) {
-			sum += tasks[i].getImportance();
+		// Create a data set with the same probabilities of tasks with importance ranging from 1 to 10		
+		for (int i = 1; i <= 10; i++) {
+			dataset.setProbability(i, 0.1);
 		}
-		return sum;
+	
+		final int ITERATIONS = 5;
+		System.out.println("****************Standard Queue****************");
+		System.out.println("Data Size,Array-Based,LinkedList-Based");
+		for (int N = 100000; N <= 1000000; N += 100000) {
+			
+			// Create the two standard queues to be used in CPUs first.
+			Queue standardQueueByArr = new StandardQueueByArr(N);
+//			Queue standardQueueByLinkedList = new StandardQueueByLinkedList();
+			Queue standardQueueByLinkedListOptim = new StandardQueueByLinkedListOptim();
+			
+			// Integrate the queues with correspondent CPUs
+			Cpu stdArrCpu = new Cpu(standardQueueByArr);
+//			Cpu stdLinkCpu = new Cpu(standardQueueByLinkedList);
+			Cpu stdLinkCpu = new Cpu(standardQueueByLinkedListOptim);
+			
+			// Generate the tasks
+			Task[] tasks = dataset.getData(N);
+			
+			long elapsedTimeSum1 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				stdArrCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum1 += end - start;
+			}		
+			long elapsedTime1 = elapsedTimeSum1 / ITERATIONS;
+			
+			long elapsedTimeSum2 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				stdLinkCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum2 += end - start;
+			}		
+			long elapsedTime2 = elapsedTimeSum2 / ITERATIONS;
+			System.out.println(N + "," + elapsedTime1 + "," + elapsedTime2);
+		}
 	}
+	
+	/**
+	 * Test the performance of PriorityQueueByArr vs PriorityQueueBySinglyLinkedList.
+	 * Run each experiment 5 times and work out an average time for each data size. 
+	 */
+	private static void testPrio() {
+		
+		// Create test data
+		Dataset dataset = new Dataset();
 
+		// Create a data set with the same probabilities of tasks with importance ranging from 1 to 10		
+		for (int i = 1; i <= 10; i++) {
+			dataset.setProbability(i, 0.1);
+		}
+	
+		final int ITERATIONS = 5;
+		System.out.println("****************Priority Queue****************");
+		System.out.println("Data Size,Array-Based,LinkedList-Based");
+		for (int N = 5000; N <= 50000; N += 5000) {
+			
+			// Create the two standard queues to be used in CPUs first.
+			Queue priorityQueueByArr = new PriorityQueueByArr(N);
+//			Queue priorityQueueBySinglyLinkedList = new PriorityQueueBySinglyLinkedList();
+			Queue priorityQueueByLinkedList = new PriorityQueueByLinkedListOptim();
+			
+			// Integrate the queues with correspondent CPUs
+			Cpu prioArrCpu = new Cpu(priorityQueueByArr);
+//			Cpu prioSinglyLinkCpu = new Cpu(priorityQueueBySinglyLinkedList);
+			Cpu prioLinkCpu = new Cpu(priorityQueueByLinkedList);
+			
+			// Generate the tasks
+			Task[] tasks = dataset.getData(N);
+			
+			long elapsedTimeSum1 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				prioArrCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum1 += end - start;
+			}		
+			long elapsedTime1 = elapsedTimeSum1 / ITERATIONS;
+			
+			long elapsedTimeSum2 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				prioLinkCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum2 += end - start;
+			}		
+			long elapsedTime2 = elapsedTimeSum2 / ITERATIONS;			
+			System.out.println(N + "," + elapsedTime1 + "," + elapsedTime2);
+		}
+	}
+	
+	/**
+	 * Test the performance of HalfPrioQueueByArr vs HalfPrioQueueByLinkedList.
+	 * Run each experiment 5 times and work out an average time for each data size. 
+	 */
+	private static void testHalfPrio() {
+		
+		// Create test data
+		Dataset dataset = new Dataset();
+
+		// Create a data set with the same probabilities of tasks with importance ranging from 1 to 10		
+		for (int i = 1; i <= 10; i++) {
+			dataset.setProbability(i, 0.1);
+		}
+	
+		final int ITERATIONS = 5;
+		System.out.println("****************Half Priority Queue****************");
+		System.out.println("Data Size,Array-Based,LinkedList-Based");
+		for (int N = 5000; N <= 50000; N += 5000) {
+			
+			// Create the two standard queues to be used in CPUs first.
+			Queue halfPrioQueueByArr = new HalfPrioQueueByArr(N);
+			Queue halfPrioQueueByLinkedList = new HalfPrioQueueByLinkedList();
+			
+			// Integrate the queues with correspondent CPUs
+			Cpu halfPrioArrCpu = new Cpu(halfPrioQueueByArr);
+			Cpu halfPrioLinkCpu = new Cpu(halfPrioQueueByLinkedList);
+			
+			// Generate the tasks
+			Task[] tasks = dataset.getData(N);
+			
+			long elapsedTimeSum1 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				halfPrioArrCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum1 += end - start;
+			}		
+			long elapsedTime1 = elapsedTimeSum1 / ITERATIONS;
+			
+			long elapsedTimeSum2 = 0;
+			for (int it = 0; it < ITERATIONS; it++) {
+				long start = System.currentTimeMillis();
+				halfPrioLinkCpu.perform(tasks);
+				long end = System.currentTimeMillis();
+				elapsedTimeSum2 += end - start;
+			}		
+			long elapsedTime2 = elapsedTimeSum2 / ITERATIONS;			
+			System.out.println(N + "," + elapsedTime1 + "," + elapsedTime2);
+		}
+	}
 }

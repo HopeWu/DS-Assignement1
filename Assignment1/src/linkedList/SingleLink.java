@@ -201,4 +201,14 @@ public class SingleLink<T> {
 		length=0;
     }
 
+
+	public void setHead(SingleTaskNode<T> head) {
+		this.head = head;
+	}
+
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
 }

@@ -5,6 +5,7 @@ import task.Task;
 
 /**
  * This is a priority queue implemented by array.
+ * @author Yan
  */
 public class PriorityQueueByArr implements Queue {
 
@@ -34,7 +35,7 @@ public class PriorityQueueByArr implements Queue {
     }
 
 	/**
-	 * Removes an element with the highest priority.
+	 * Removes the element with the highest priority.
 	 */
     @Override
     public Task dequeue() {
