@@ -24,13 +24,12 @@ public class TestDrive {
 		
 		efficiencyTest.setQueue1(new StandardQueueByLinkedList());
 		efficiencyTest.setQueue2(new HalfPrioQueueByLinkedList());
-		efficiencyTest.setDatasize(1000);
-		efficiencyTest.setBatchSize(100);
+		final int S = 200;
+		efficiencyTest.setDatasize(S*1000);
+		efficiencyTest.setBatchSize(S*100);
 		efficiencyTest.setDatasetProbability(100, 0.1);
-		efficiencyTest.setDatasetProbability(1, 1.0);
+		efficiencyTest.setDatasetProbability(1, 0.9);
 		efficiencyTest.run();
 	}
-	static void experimentTwo() {
-		
-	}
+	
 }
