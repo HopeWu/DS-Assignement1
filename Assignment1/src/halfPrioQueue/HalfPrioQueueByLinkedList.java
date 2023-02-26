@@ -27,6 +27,7 @@ public class HalfPrioQueueByLinkedList extends Queue {
     public void setThreshold(int threshold) {
 		this.threshold = threshold;
 	}
+
 	
 	public void setRandomSamplingFlag(boolean randomSamplingFlag) {
 		this.randomSamplingFlag = randomSamplingFlag;
