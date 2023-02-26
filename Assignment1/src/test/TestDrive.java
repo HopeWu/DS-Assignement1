@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import halfPrioQueue.HalfPrioQueueByArr;
 import halfPrioQueue.HalfPrioQueueByLinkedList;
 import priorityQueue.PriorityQueueByArr;
+import halfPrioQueue.HalfPrioQueueByLinkedListImp1;
 import priorityQueue.PriorityQueueBySinglyLinkedList;
 
 import priorityQueue.PriorityQueueByLinkedListOptim;
@@ -27,9 +28,13 @@ public class TestDrive {
 		
 		EfficiencyTest efficiencyTest = new EfficiencyTest();
 		
-		efficiencyTest.setQueue1(new StandardQueueByLinkedList());
-		efficiencyTest.setQueue2(new HalfPrioQueueByLinkedList());
-		final int S = 200;
+		Queue queue1 = new StandardQueueByLinkedListOptim();
+		HalfPrioQueueByLinkedListImp1 queue2 = new HalfPrioQueueByLinkedListImp1();
+		queue2.setThreshold(50);
+		
+		efficiencyTest.setQueue1(queue1);
+		efficiencyTest.setQueue2(queue2);
+		final int S = 1;
 		efficiencyTest.setDatasize(S*1000);
 		efficiencyTest.setBatchSize(S*100);
 		efficiencyTest.setDatasetProbability(100, 0.1);
