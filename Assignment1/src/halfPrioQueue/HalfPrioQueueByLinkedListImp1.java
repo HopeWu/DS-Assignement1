@@ -8,7 +8,7 @@ import task.Task;
 
 /**
  * 
- * Only change getIndexOfMaxPriorityElement. Make is look from the beginning instead of the rear.
+ * Only change getIndexOfMaxPriorityElement. Make it look from the beginning instead of the rear.
  * 
  * Half Priority Queue is functionally similar to a Priority 
  * Queue, except that it dequeues and peeks the element with 
