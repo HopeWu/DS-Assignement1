@@ -5,6 +5,9 @@ import java.util.Random;
 
 import task.Task;
 
+/**
+The Dataset object is responsible for generating data for the test cases.
+*/
 public class Dataset {
 	public Dataset() {
 		super();
@@ -23,18 +26,20 @@ public class Dataset {
 	// upper bound, for generating random digits
 	private int upperbound;
 
+	/**
+	To set the probability of one digit. Note that the probability is not the effective probability. It's relative to other digits' probabilities.
+	*/
 	public void setProbability(int digit, double probability) {
 		if (this.distribution == null)
 			this.distribution = new Hashtable<Integer, Double>();
 		this.distribution.put(digit, probability);
 	}
-
+	/**
+	 * Generate the testing data according to the distribution.
+	 * 
+	 * @size, how many tasks to generate
+	 */
 	public Task[] getData(int size) {
-		/*
-		 * Generate the testing data according to the distribution.
-		 * 
-		 * @size, how many tasks to generate
-		 */
 		
 		if (this.distribution == null) {
 			System.out.println("Error! Please set probabilities before.");
@@ -56,7 +61,9 @@ public class Dataset {
 		}
 		return tasks;
 	}
-	
+	/**
+	Set two dictionaries, which are used to generate the data.
+	*/
 	private void setDictionaries() {
 		this.rescaledDist = new Hashtable<Integer, Double>();
 		this.generatingDict = new Hashtable<Integer, Integer>();
