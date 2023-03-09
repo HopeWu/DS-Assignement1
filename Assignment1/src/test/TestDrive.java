@@ -23,7 +23,9 @@ public class TestDrive {
 //		experimentOne();
 		testPerformance();
 	}
-	
+	/**
+	Experiment functions. Its contents will be changed across different experiments. e.g. threshold, probability, datasize.
+	*/
 	static void experimentOne() {
 		
 		EfficiencyTest efficiencyTest = new EfficiencyTest();
@@ -42,11 +44,17 @@ public class TestDrive {
 		efficiencyTest.run();
 	}
 	
+	/**
+	Experiments wrappers.
+	*/
 	static void testPerformance() {
 		PerformanceTest performanceTest = new PerformanceTest();
 		performanceTest.run();
 	}
 	
+	/**
+	Experiments wrappers.
+	*/
 	static void experimentTwo_LinkedList(int batch_size, double rate) {
 		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
 		
@@ -69,7 +77,9 @@ public class TestDrive {
 		efficiencyTest2.run();
 	}
 	
-	
+	/**
+	Experiments wrappers.
+	*/
 	static void experimentTwo_Array(int batch_size, double rate) {
 		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
 		
@@ -92,6 +102,9 @@ public class TestDrive {
 		efficiencyTest2.run();
 	}
 
+	/**
+	Experiments wrappers.
+	*/
 	static void experimentTwo_OptimizedLinkedList(int batch_size, double rate) {
 		EfficiencyTest efficiencyTest2 = new EfficiencyTest();
 		
