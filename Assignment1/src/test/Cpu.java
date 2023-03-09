@@ -3,6 +3,9 @@ package test;
 import queue.Queue;
 import task.Task;
 
+/**
+Each cpu is composed of a queue. Each cpu can be assigned with some tasks and then perform its own tasks.
+*/
 public class Cpu {
 	private Queue queue;
 
@@ -44,7 +47,6 @@ public class Cpu {
 	 * Execute all the tasks currently loaded with this cpu.
 	 */
 	public void perform() {
-
 		this.execute();
 	}
 
@@ -55,7 +57,6 @@ public class Cpu {
 	 *
 	 */
 	public void perform(Task[] tasks) {
-
 		this.emptyTasks();
 		this.assign(tasks);
 		this.execute();
@@ -68,7 +69,6 @@ public class Cpu {
 	 *
 	 */
 	public void perform2(Task[] tasks) {
-
 		this.emptyTasks();
 		this.assign(tasks);
 		this.execute2();
@@ -110,30 +110,29 @@ public class Cpu {
 		this.execute();
 	}
 
+	/**
+	* Execute all the tasks inside the queue and this queue becomes empty.
+	*/
 	public void execute() {
-		/*
-		 * Execute all the tasks inside the queue and this queue becomes empty.
-		 */
 		Task task;
 		while (!queue.isEmpty()) {
 			task = queue.dequeue();
 			task.perform();
 		}
 	}
-	
+	/**
+	* Execute all the tasks inside the queue, no sleep time.
+	*/
 	public void execute2() {
-		/*
-		 * Execute all the tasks inside the queue, no sleep time.
-		 */
 		while (!queue.isEmpty()) {
 			queue.dequeue();
 		}
 	}
 
+	/**
+	* Execute all the tasks inside the queue and this queue becomes empty.
+	*/
 	public Task executeOnce() {
-		/*
-		 * Execute all the tasks inside the queue and this queue becomes empty.
-		 */
 		Task task;
 		if (!queue.isEmpty()) {
 			task = queue.dequeue();
@@ -142,11 +141,10 @@ public class Cpu {
 		}
 		return null;
 	}
-
+	/**
+	* Empty the queue
+	 */
 	public void emptyTasks() {
-		/*
-		 * Empty the queue
-		 */
 		this.queue.empty();
 	}
 
